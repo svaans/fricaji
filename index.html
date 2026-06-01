@@ -13,10 +13,9 @@
       --gris: #f7f3f1;
       --texto: #2a1a14;
       --texto-suave: #7a5a50;
+      --dorado: #f5a623;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--gris);
@@ -24,425 +23,607 @@
       min-height: 100vh;
     }
 
+    /* ── HEADER ── */
     header {
-      background: linear-gradient(135deg, var(--rojo) 0%, var(--rojo-oscuro) 100%);
+      background: linear-gradient(135deg, #c43e1c 0%, #E8522A 50%, #f06030 100%);
       color: var(--blanco);
       text-align: center;
-      padding: 32px 20px 24px;
+      padding: 36px 20px 28px;
       position: relative;
       overflow: hidden;
     }
-    header::before {
-      content: '';
+    .header-pattern {
       position: absolute;
-      top: -40px; right: -40px;
-      width: 160px; height: 160px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 50%;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.12;
+      pointer-events: none;
     }
-    header::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; left: -30px;
-      width: 200px; height: 200px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 50%;
-    }
+    .header-content { position: relative; z-index: 1; }
 
     .logo-svg {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 12px;
+      width: 88px; height: 88px;
+      margin: 0 auto 14px;
       display: block;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 4px 14px rgba(0,0,0,0.35));
     }
-
     header h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
+      font-size: 2.6rem;
+      font-weight: 900;
       letter-spacing: -1px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.25);
     }
     header p {
-      font-size: 0.95rem;
-      opacity: 0.9;
-      margin-top: 4px;
-      letter-spacing: 0.5px;
+      font-size: 0.92rem;
+      opacity: 0.88;
+      margin-top: 5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
     }
 
+    /* ── NAV ── */
     .nav-cats {
       display: flex;
-      gap: 10px;
-      padding: 16px 16px;
+      gap: 8px;
+      padding: 14px 16px;
       overflow-x: auto;
       scrollbar-width: none;
       background: var(--blanco);
-      border-bottom: 1px solid #ecddd8;
+      border-bottom: 2px solid #ecddd8;
       position: sticky;
       top: 0;
       z-index: 100;
     }
     .nav-cats::-webkit-scrollbar { display: none; }
-
     .cat-btn {
       flex-shrink: 0;
-      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
       border-radius: 999px;
       border: 2px solid var(--rojo);
       background: transparent;
       color: var(--rojo);
-      font-size: 0.88rem;
-      font-weight: 600;
+      font-size: 0.85rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
       white-space: nowrap;
     }
-    .cat-btn.active,
-    .cat-btn:hover {
+    .cat-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .cat-btn.active, .cat-btn:hover {
       background: var(--rojo);
       color: var(--blanco);
     }
+    .cat-btn.active svg path,
+    .cat-btn.active svg circle,
+    .cat-btn.active svg ellipse,
+    .cat-btn:hover svg path,
+    .cat-btn:hover svg circle,
+    .cat-btn:hover svg ellipse { stroke: white; }
+    .cat-btn.active svg .fill-cat,
+    .cat-btn:hover svg .fill-cat { fill: white; }
 
-    main {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 20px 14px 60px;
-    }
+    /* ── MAIN ── */
+    main { max-width: 640px; margin: 0 auto; padding: 22px 14px 70px; }
 
-    .seccion {
-      margin-bottom: 36px;
-    }
+    /* ── SECCION ── */
+    .seccion { margin-bottom: 40px; }
     .seccion-titulo {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.3rem;
-      font-weight: 800;
+      gap: 12px;
+      font-size: 1.25rem;
+      font-weight: 900;
       color: var(--rojo-oscuro);
-      margin-bottom: 14px;
-      padding-bottom: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
       border-bottom: 3px solid var(--rojo-claro);
     }
+    .seccion-titulo svg { width: 32px; height: 32px; flex-shrink: 0; }
 
+    /* ── CARD PRODUCTO ── */
     .producto {
       background: var(--blanco);
-      border-radius: 16px;
+      border-radius: 18px;
       margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 14px;
       padding: 14px 16px;
-      box-shadow: 0 2px 8px rgba(232,82,42,0.08);
-      border: 1px solid rgba(232,82,42,0.1);
+      box-shadow: 0 2px 10px rgba(232,82,42,0.09);
+      border: 1.5px solid rgba(232,82,42,0.12);
       transition: transform 0.15s, box-shadow 0.15s;
     }
-    .producto:active {
-      transform: scale(0.98);
-    }
-
-    .prod-info {
-      flex: 1;
-    }
-    .prod-nombre {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--texto);
-      line-height: 1.2;
-    }
-    .prod-desc {
-      font-size: 0.8rem;
-      color: var(--texto-suave);
-      margin-top: 3px;
-      line-height: 1.4;
-    }
-    .prod-tags {
-      display: flex;
-      gap: 5px;
-      margin-top: 6px;
-      flex-wrap: wrap;
-    }
-    .tag {
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-weight: 600;
-    }
-    .tag-picante { background: #fff0ed; color: #c43e1c; }
-    .tag-popular { background: #fff8e1; color: #b8860b; }
-    .tag-nuevo   { background: #e8f5e9; color: #2e7d32; }
-    .tag-veggie  { background: #e8f5e9; color: #388e3c; }
-
-    .prod-precio {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--rojo);
+    .producto:active { transform: scale(0.98); }
+    .prod-icon {
+      width: 56px; height: 56px;
       flex-shrink: 0;
-      text-align: right;
-    }
-    .prod-precio span {
-      display: block;
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: var(--texto-suave);
-    }
-
-    .salsas-box {
-      background: var(--blanco);
-      border-radius: 16px;
-      padding: 16px;
-      border: 1px solid rgba(232,82,42,0.15);
-      box-shadow: 0 2px 8px rgba(232,82,42,0.06);
-    }
-    .salsas-titulo {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--texto-suave);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 10px;
-    }
-    .salsas-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 8px;
-    }
-    .salsa-pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 11px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 600;
       background: var(--rojo-claro);
-      color: var(--rojo-oscuro);
-    }
-    .salsa-nivel {
-      display: flex;
-      gap: 2px;
-    }
-    .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--rojo);
-      opacity: 0.3;
-    }
-    .dot.on { opacity: 1; }
-
-    .combo-banner {
-      background: linear-gradient(135deg, #2a1a14 0%, #4a2a1e 100%);
-      color: var(--blanco);
-      border-radius: 16px;
-      padding: 18px 20px;
-      margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    .combo-banner h3 {
-      font-size: 1rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-    .combo-banner p {
-      font-size: 0.82rem;
-      opacity: 0.8;
-      line-height: 1.4;
-    }
-    .combo-precio {
-      margin-top: 10px;
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #ffcba4;
-    }
-
-    footer {
-      background: var(--blanco);
-      border-top: 1px solid #ecddd8;
-      text-align: center;
-      padding: 24px 20px;
-      margin-top: 20px;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      max-width: 400px;
-      margin: 0 auto 20px;
-    }
-    .info-card {
-      background: var(--gris);
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 0.82rem;
-      color: var(--texto-suave);
-    }
-    .info-card strong {
-      display: block;
-      color: var(--rojo-oscuro);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 3px;
-    }
-    .footer-brand {
-      font-size: 0.78rem;
-      color: #b0a09a;
-    }
-    .footer-brand b { color: var(--rojo); }
-
-    .whatsapp-btn {
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      background: #25D366;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 24px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      margin: 0 auto;
-      width: fit-content;
+      overflow: hidden;
     }
+    .prod-icon svg { width: 46px; height: 46px; }
+    .prod-info { flex: 1; }
+    .prod-nombre { font-size: 1rem; font-weight: 700; color: var(--texto); line-height: 1.2; }
+    .prod-desc { font-size: 0.79rem; color: var(--texto-suave); margin-top: 3px; line-height: 1.4; }
+    .prod-tags { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+    .tag { font-size: 0.68rem; padding: 2px 8px; border-radius: 999px; font-weight: 700; }
+    .tag-picante { background: #fff0ed; color: #c43e1c; }
+    .tag-popular { background: #fff8e1; color: #9a6800; }
+    .prod-precio {
+      font-size: 1.1rem; font-weight: 900; color: var(--rojo);
+      flex-shrink: 0; text-align: right;
+    }
+    .prod-precio span { display: block; font-size: 0.68rem; font-weight: 500; color: var(--texto-suave); }
 
+    /* ── COMBO ── */
+    .combo-banner {
+      background: linear-gradient(135deg, #2a1a14 0%, #3e2218 100%);
+      color: var(--blanco);
+      border-radius: 18px;
+      padding: 18px 20px 18px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .combo-ilu { width: 56px; height: 56px; flex-shrink: 0; }
+    .combo-banner h3 { font-size: 0.98rem; font-weight: 800; margin-bottom: 3px; }
+    .combo-banner p { font-size: 0.8rem; opacity: 0.78; line-height: 1.4; }
+    .combo-precio { margin-top: 8px; font-size: 1.25rem; font-weight: 900; color: #ffcba4; }
+
+    /* ── SALSAS ── */
+    .salsas-box {
+      background: var(--blanco);
+      border-radius: 18px;
+      padding: 18px;
+      border: 1.5px solid rgba(232,82,42,0.15);
+      box-shadow: 0 2px 8px rgba(232,82,42,0.07);
+    }
+    .salsas-titulo {
+      font-size: 0.82rem; font-weight: 700; color: var(--texto-suave);
+      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px;
+    }
+    .salsas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 9px; }
+    .salsa-pill {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 12px;
+      font-size: 0.82rem; font-weight: 600;
+      background: var(--rojo-claro); color: var(--rojo-oscuro);
+    }
+    .salsa-pill svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .salsa-nivel { display: flex; gap: 3px; margin-left: auto; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rojo); opacity: 0.25; }
+    .dot.on { opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blanco);
+      border-top: 2px solid #ecddd8;
+      text-align: center;
+      padding: 28px 20px;
+      margin-top: 20px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 14px; max-width: 400px; margin: 0 auto 22px;
+    }
+    .info-card {
+      background: var(--gris); border-radius: 12px;
+      padding: 12px; font-size: 0.82rem; color: var(--texto-suave);
+    }
+    .info-card strong {
+      display: block; color: var(--rojo-oscuro);
+      font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 0.5px; margin-bottom: 4px;
+    }
+    .footer-brand { font-size: 0.76rem; color: #b0a09a; }
+    .footer-brand b { color: var(--rojo); }
+    .whatsapp-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: #25D366; color: white; border: none;
+      border-radius: 14px; padding: 13px 26px;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      text-decoration: none; margin-bottom: 18px;
+    }
     .nota {
-      background: #fff8e1;
-      border-left: 4px solid #ffc107;
-      border-radius: 0 10px 10px 0;
-      padding: 10px 14px;
-      font-size: 0.82rem;
-      color: #7a6200;
-      margin-bottom: 16px;
+      background: #fff8e1; border-left: 4px solid var(--dorado);
+      border-radius: 0 10px 10px 0; padding: 10px 14px;
+      font-size: 0.82rem; color: #7a6200; margin-bottom: 16px;
     }
-
     .staff-link {
-      display: block;
-      margin-top: 16px;
-      font-size: 0.72rem;
-      color: #c0b0aa;
-      text-decoration: none;
+      display: block; margin-top: 14px;
+      font-size: 0.7rem; color: #c8b8b2; text-decoration: none;
     }
     .staff-link:hover { color: var(--rojo); }
   </style>
 </head>
 <body>
 
+<!-- ══ HEADER ══ -->
 <header>
-  <svg class="logo-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 80 C50 80 10 55 10 30 C10 18 20 10 30 10 C38 10 45 15 50 22 C55 15 62 10 70 10 C80 10 90 18 90 30 C90 55 50 80 50 80Z" fill="white" fill-opacity="0.95"/>
-    <path d="M14 38 C8 35 2 30 4 24 C6 20 12 22 14 26 C14 30 12 35 14 38Z" fill="white" fill-opacity="0.85"/>
-    <path d="M14 38 C9 42 3 40 2 34 C1 30 6 28 10 31 C12 34 13 36 14 38Z" fill="white" fill-opacity="0.7"/>
-    <path d="M86 38 C92 35 98 30 96 24 C94 20 88 22 86 26 C86 30 88 35 86 38Z" fill="white" fill-opacity="0.85"/>
-    <path d="M86 38 C91 42 97 40 98 34 C99 30 94 28 90 31 C88 34 87 36 86 38Z" fill="white" fill-opacity="0.7"/>
-    <text x="50" y="50" text-anchor="middle" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-weight="900" font-size="16" fill="#E8522A">Fricaji</text>
-    <circle cx="25" cy="22" r="3" fill="#E8522A" opacity="0.6"/>
+  <!-- Patron caricatura de fondo -->
+  <svg class="header-pattern" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <!-- Alita 1 -->
+    <g transform="translate(30,20) rotate(-25)">
+      <path d="M0 28 C-4 18 -3 6 6 2 C14-2 24 4 26 14 C28 24 20 34 12 34 Z"/>
+      <line x1="4" y1="26" x2="20" y2="8" stroke="rgba(0,0,0,0.15)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </g>
+    <!-- Llama 1 -->
+    <g transform="translate(80,10)">
+      <path d="M8 0 C10 6 16 8 14 16 C12 22 6 24 4 18 C2 12 6 6 8 0Z M4 10 C4 14 8 16 8 12 C8 8 4 6 4 10Z"/>
+    </g>
+    <!-- Alita 2 -->
+    <g transform="translate(140,30) rotate(15)">
+      <path d="M0 28 C-4 18 -3 6 6 2 C14-2 24 4 26 14 C28 24 20 34 12 34 Z"/>
+      <line x1="4" y1="26" x2="20" y2="8" stroke="rgba(0,0,0,0.15)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </g>
+    <!-- Estrellita -->
+    <path transform="translate(200,15)" d="M6 0 L7.5 4.5 L12 4.5 L8.5 7 L10 12 L6 9 L2 12 L3.5 7 L0 4.5 L4.5 4.5 Z"/>
+    <!-- Llama 2 -->
+    <g transform="translate(240,5)">
+      <path d="M8 0 C10 6 16 8 14 16 C12 22 6 24 4 18 C2 12 6 6 8 0Z M4 10 C4 14 8 16 8 12 C8 8 4 6 4 10Z"/>
+    </g>
+    <!-- Alita 3 -->
+    <g transform="translate(290,25) rotate(-10)">
+      <path d="M0 28 C-4 18 -3 6 6 2 C14-2 24 4 26 14 C28 24 20 34 12 34 Z"/>
+      <line x1="4" y1="26" x2="20" y2="8" stroke="rgba(0,0,0,0.15)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </g>
+    <!-- Puntitos decorativos -->
+    <circle cx="60" cy="50" r="3"/>
+    <circle cx="170" cy="12" r="2"/>
+    <circle cx="220" cy="45" r="3"/>
+    <circle cx="355" cy="18" r="2.5"/>
+    <circle cx="100" cy="30" r="1.5"/>
+    <circle cx="265" cy="50" r="2"/>
+    <!-- Fila inferior -->
+    <g transform="translate(10,130) rotate(20)">
+      <path d="M0 28 C-4 18 -3 6 6 2 C14-2 24 4 26 14 C28 24 20 34 12 34 Z"/>
+    </g>
+    <g transform="translate(110,120)">
+      <path d="M8 0 C10 6 16 8 14 16 C12 22 6 24 4 18 C2 12 6 6 8 0Z"/>
+    </g>
+    <g transform="translate(200,125) rotate(-15)">
+      <path d="M0 28 C-4 18 -3 6 6 2 C14-2 24 4 26 14 C28 24 20 34 12 34 Z"/>
+    </g>
+    <path transform="translate(315,115)" d="M6 0 L7.5 4.5 L12 4.5 L8.5 7 L10 12 L6 9 L2 12 L3.5 7 L0 4.5 L4.5 4.5 Z"/>
+    <g transform="translate(360,130)">
+      <path d="M8 0 C10 6 16 8 14 16 C12 22 6 24 4 18 C2 12 6 6 8 0Z"/>
+    </g>
+    <circle cx="60" cy="160" r="2.5"/>
+    <circle cx="165" cy="145" r="2"/>
+    <circle cx="270" cy="155" r="3"/>
   </svg>
 
-  <h1>Fricaji</h1>
-  <p>Alitas · Hamburguesas · Arepas</p>
+  <div class="header-content">
+    <!-- Logo SVG original Fricaji -->
+    <svg class="logo-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 80 C50 80 10 55 10 30 C10 18 20 10 30 10 C38 10 45 15 50 22 C55 15 62 10 70 10 C80 10 90 18 90 30 C90 55 50 80 50 80Z" fill="white" fill-opacity="0.95"/>
+      <path d="M14 38 C8 35 2 30 4 24 C6 20 12 22 14 26 C14 30 12 35 14 38Z" fill="white" fill-opacity="0.85"/>
+      <path d="M14 38 C9 42 3 40 2 34 C1 30 6 28 10 31 C12 34 13 36 14 38Z" fill="white" fill-opacity="0.7"/>
+      <path d="M86 38 C92 35 98 30 96 24 C94 20 88 22 86 26 C86 30 88 35 86 38Z" fill="white" fill-opacity="0.85"/>
+      <path d="M86 38 C91 42 97 40 98 34 C99 30 94 28 90 31 C88 34 87 36 86 38Z" fill="white" fill-opacity="0.7"/>
+      <text x="50" y="50" text-anchor="middle" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-weight="900" font-size="16" fill="#E8522A">Fricaji</text>
+      <circle cx="25" cy="22" r="3" fill="#E8522A" opacity="0.6"/>
+    </svg>
+    <h1>Fricaji</h1>
+    <p>Alitas &middot; Hamburguesas &middot; Arepas</p>
+  </div>
 </header>
 
+<!-- ══ NAV CATEGORIAS ══ -->
 <nav class="nav-cats" id="nav">
-  <button class="cat-btn active" onclick="scrollTo('alitas', this)">Alitas</button>
-  <button class="cat-btn" onclick="scrollTo('hamburguesas', this)">Hamburguesas</button>
-  <button class="cat-btn" onclick="scrollTo('arepas', this)">Arepas</button>
-  <button class="cat-btn" onclick="scrollTo('combos', this)">Combos</button>
-  <button class="cat-btn" onclick="scrollTo('bebidas', this)">Bebidas</button>
-  <button class="cat-btn" onclick="scrollTo('salsas', this)">Salsas</button>
+
+  <button class="cat-btn active" onclick="irA('alitas', this)">
+    <!-- Alita cartoon -->
+    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 16 C1 12 2 6 7 3 C12 0 18 3 18 9 C18 14 13 18 8 17 Z" fill="#E8522A" stroke="#c43e1c" stroke-width="1"/>
+      <line x1="5" y1="14" x2="15" y2="5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="15" cy="5" r="2" fill="white" stroke="#c43e1c" stroke-width="0.8"/>
+      <circle cx="5" cy="14" r="2" fill="white" stroke="#c43e1c" stroke-width="0.8"/>
+    </svg>
+    Alitas
+  </button>
+
+  <button class="cat-btn" onclick="irA('hamburguesas', this)">
+    <!-- Burger cartoon -->
+    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 8 C3 5 5 3 10 3 C15 3 17 5 17 8 Z" fill="#c87941" stroke="#8B5530" stroke-width="1"/>
+      <rect x="2" y="8" width="16" height="2.5" rx="1" fill="#7dc455"/>
+      <rect x="2" y="10.5" width="16" height="2.5" rx="1" fill="#d44"/>
+      <rect x="2" y="13" width="16" height="2.5" rx="1" fill="#c87941" stroke="#8B5530" stroke-width="0.8"/>
+      <ellipse cx="8" cy="3.5" rx="1" ry="0.8" fill="#f0d070" opacity="0.8"/>
+      <ellipse cx="12" cy="3.2" rx="0.8" ry="0.6" fill="#f0d070" opacity="0.8"/>
+    </svg>
+    Hamburguesas
+  </button>
+
+  <button class="cat-btn" onclick="irA('arepas', this)">
+    <!-- Arepa cartoon -->
+    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="10" cy="11" rx="8" ry="5" fill="#f5c842" stroke="#c8960a" stroke-width="1"/>
+      <ellipse cx="10" cy="9.5" rx="8" ry="5" fill="#f7d55a" stroke="#c8960a" stroke-width="1"/>
+      <line x1="6" y1="8" x2="8" y2="11" stroke="#c8960a" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+      <line x1="10" y1="7" x2="10" y2="11" stroke="#c8960a" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+      <line x1="14" y1="8" x2="12" y2="11" stroke="#c8960a" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+      <!-- steam -->
+      <path d="M8 5 C8 3 9 2 8 1" stroke="#c8960a" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.5"/>
+      <path d="M12 5 C12 3 11 2 12 1" stroke="#c8960a" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.5"/>
+    </svg>
+    Arepas
+  </button>
+
+  <button class="cat-btn" onclick="irA('combos', this)">
+    <!-- Llama cartoon -->
+    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 1 C12 5 17 7 15 13 C13 17 7 18 5 13 C3 9 7 5 10 1Z" fill="#E8522A" stroke="#c43e1c" stroke-width="0.8"/>
+      <path d="M8 7 C9 9 13 10 12 14 C11 16 8 16 7 13 C6 11 7 9 8 7Z" fill="#f5a623" stroke="none"/>
+      <path d="M10 11 C10 13 11 14 10 15 C9 14 9 13 10 11Z" fill="#fff3" stroke="none"/>
+    </svg>
+    Combos
+  </button>
+
+  <button class="cat-btn" onclick="irA('bebidas', this)">
+    <!-- Vaso cartoon -->
+    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 5 L7 18 L13 18 L15 5 Z" fill="#b3e0f7" stroke="#4a9fc8" stroke-width="1" stroke-linejoin="round"/>
+      <rect x="5" y="5" width="10" height="2" rx="0.5" fill="#4a9fc8" opacity="0.5"/>
+      <!-- ice cubes -->
+      <rect x="7" y="10" width="2.5" height="2.5" rx="0.5" fill="white" opacity="0.7"/>
+      <rect x="10" y="11" width="2.5" height="2.5" rx="0.5" fill="white" opacity="0.6"/>
+      <!-- straw -->
+      <line x1="13" y1="3" x2="12" y2="16" stroke="#e84" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- bubbles -->
+      <circle cx="8" cy="8" r="0.7" fill="white" opacity="0.8"/>
+      <circle cx="11" cy="9" r="0.5" fill="white" opacity="0.7"/>
+    </svg>
+    Bebidas
+  </button>
+
+  <button class="cat-btn" onclick="irA('salsas', this)">
+    <!-- Salsa cartoon -->
+    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="7" y="3" width="6" height="11" rx="2" fill="#E8522A" stroke="#c43e1c" stroke-width="1"/>
+      <rect x="8" y="2" width="4" height="2" rx="1" fill="#c43e1c"/>
+      <!-- label -->
+      <rect x="8" y="7" width="4" height="4" rx="0.5" fill="white" opacity="0.4"/>
+      <!-- drip -->
+      <path d="M10 14 C10 15 9 16 10 17 C11 16 10 15 10 14Z" fill="#E8522A"/>
+      <!-- shine -->
+      <path d="M8.5 4.5 C9 4.5 9.5 5 9 5.5" stroke="white" stroke-width="0.8" stroke-linecap="round" opacity="0.7"/>
+    </svg>
+    Salsas
+  </button>
+
 </nav>
 
 <main>
 
+  <!-- ══ ALITAS ══ -->
   <section class="seccion" id="alitas">
-    <h2 class="seccion-titulo">Alitas BBQ</h2>
+    <h2 class="seccion-titulo">
+      <!-- Icono alita grande -->
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 26 C2 20 3 10 11 5 C18 0 28 5 28 14 C28 22 20 29 12 27 Z" fill="#E8522A" stroke="#c43e1c" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M8 23 C6 19 7 12 12 9" stroke="rgba(255,200,180,0.5)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <line x1="7" y1="23" x2="23" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="23" cy="8" r="3.5" fill="white" stroke="#c43e1c" stroke-width="1.2"/>
+        <circle cx="7" cy="23" r="3.5" fill="white" stroke="#c43e1c" stroke-width="1.2"/>
+        <path d="M12 26 C12 28.5 11 30 12 31" stroke="#E8522A" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M17 25 C17.5 27 16.5 28 17.5 29" stroke="#E8522A" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+      Alitas BBQ
+    </h2>
 
     <div class="nota">Todas las alitas vienen con tu salsa favorita. Elige la que mas te guste.</div>
 
+    <!-- Alitas x6 -->
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M7 37 C4 29 5 16 14 9 C22 2 36 6 37 18 C38 28 30 39 20 38 Z" fill="#D4501F" stroke="#2a1a14" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M10 33 C8 27 9 18 15 13" stroke="rgba(255,180,150,0.45)" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <line x1="9" y1="33" x2="32" y2="11" stroke="#f5e0d5" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="32" cy="11" r="5" fill="#f5e0d5" stroke="#2a1a14" stroke-width="1.2"/>
+          <circle cx="9" cy="33" r="5" fill="#f5e0d5" stroke="#2a1a14" stroke-width="1.2"/>
+          <path d="M19 38 C19 41 18 43 19 44" stroke="#D4501F" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M25 37 C26 39 25 41 26 42" stroke="#D4501F" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="14" cy="20" r="2" fill="rgba(255,255,255,0.3)"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Alitas x 6</div>
         <div class="prod-desc">6 alitas marinadas con salsa a eleccion</div>
-        <div class="prod-tags">
-          <span class="tag tag-popular">Mas pedido</span>
-        </div>
+        <div class="prod-tags"><span class="tag tag-popular">Mas pedido</span></div>
       </div>
       <div class="prod-precio">$18.000<span>COP</span></div>
     </div>
 
+    <!-- Alitas x10 -->
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M5 38 C3 30 5 16 15 9 C23 3 37 8 37 19 C37 30 28 40 18 38 Z" fill="#E8522A" stroke="#2a1a14" stroke-width="1.5"/>
+          <path d="M8 34 C6 27 8 18 14 13" stroke="rgba(255,190,160,0.4)" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <line x1="8" y1="34" x2="33" y2="10" stroke="#f5e0d5" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="33" cy="10" r="5" fill="#f5e0d5" stroke="#2a1a14" stroke-width="1.2"/>
+          <circle cx="8" cy="34" r="5" fill="#f5e0d5" stroke="#2a1a14" stroke-width="1.2"/>
+          <path d="M20 39 C20 41.5 19 43 20 44" stroke="#c43e1c" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M27 37 C28 39.5 27 41 28 42" stroke="#c43e1c" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Alitas x 10</div>
         <div class="prod-desc">10 alitas marinadas con salsa a eleccion</div>
-        <div class="prod-tags">
-          <span class="tag tag-popular">Mas pedido</span>
-        </div>
+        <div class="prod-tags"><span class="tag tag-popular">Mas pedido</span></div>
       </div>
       <div class="prod-precio">$28.000<span>COP</span></div>
     </div>
 
+    <!-- Alitas x15 -->
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M6 37 C3 29 5 15 14 8 C23 1 38 7 37 20 C36 31 26 41 16 38 Z" fill="#c43e1c" stroke="#2a1a14" stroke-width="1.5"/>
+          <path d="M9 33 C7 26 9 17 15 12" stroke="rgba(255,170,140,0.4)" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <line x1="9" y1="33" x2="33" y2="9" stroke="#f5e0d5" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="33" cy="9" r="5" fill="#f5e0d5" stroke="#2a1a14" stroke-width="1.2"/>
+          <circle cx="9" cy="33" r="5" fill="#f5e0d5" stroke="#2a1a14" stroke-width="1.2"/>
+          <path d="M19 39 C19 42 18 43 19 44" stroke="#c43e1c" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M25 38 C26 40 25 41 26 42" stroke="#c43e1c" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="13" cy="19" r="2.5" fill="rgba(255,255,255,0.3)"/>
+          <circle cx="20" cy="14" r="1.8" fill="rgba(255,255,255,0.25)"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Alitas x 15</div>
         <div class="prod-desc">15 alitas — ideal para compartir</div>
-        <div class="prod-tags">
-          <span class="tag tag-popular">Para la mesa</span>
-        </div>
+        <div class="prod-tags"><span class="tag tag-popular">Para la mesa</span></div>
       </div>
       <div class="prod-precio">$40.000<span>COP</span></div>
     </div>
 
+    <!-- Doble Salsa -->
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M7 37 C4 29 5 16 14 9 C22 2 36 6 37 18 C38 28 30 39 20 38 Z" fill="#D4501F" stroke="#2a1a14" stroke-width="1.5"/>
+          <line x1="9" y1="33" x2="32" y2="11" stroke="#f5e0d5" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="32" cy="11" r="5" fill="#f5e0d5" stroke="#2a1a14" stroke-width="1.2"/>
+          <circle cx="9" cy="33" r="5" fill="#f5e0d5" stroke="#2a1a14" stroke-width="1.2"/>
+          <!-- segunda salsa gota -->
+          <path d="M28 38 C28 42 26 44 28 46" stroke="#f5a623" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M20 39 C20 42 19 44 20 45" stroke="#E8522A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <!-- etiqueta x2 -->
+          <circle cx="37" cy="10" r="7" fill="#f5a623" stroke="#2a1a14" stroke-width="1"/>
+          <text x="37" y="14" text-anchor="middle" font-size="7" font-weight="900" fill="#2a1a14" font-family="Arial">x2</text>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Alitas x 6 — Doble Salsa</div>
         <div class="prod-desc">Pide 2 salsas distintas para tus 6 alitas</div>
-        <div class="prod-tags">
-          <span class="tag tag-picante">Picante disponible</span>
-        </div>
+        <div class="prod-tags"><span class="tag tag-picante">Picante disponible</span></div>
       </div>
       <div class="prod-precio">$21.000<span>COP</span></div>
     </div>
   </section>
 
+  <!-- ══ HAMBURGUESAS ══ -->
   <section class="seccion" id="hamburguesas">
-    <h2 class="seccion-titulo">Hamburguesas</h2>
+    <h2 class="seccion-titulo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M4 13 C4 8 7 5 16 5 C25 5 28 8 28 13 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.5" stroke-linejoin="round"/>
+        <ellipse cx="11" cy="6" rx="1.8" ry="1.2" fill="#f0d070" opacity="0.9"/>
+        <ellipse cx="16" cy="5.5" rx="1.5" ry="1" fill="#f0d070" opacity="0.9"/>
+        <ellipse cx="21" cy="6.2" rx="1.6" ry="1.1" fill="#f0d070" opacity="0.9"/>
+        <rect x="3" y="13" width="26" height="3.5" rx="1.5" fill="#7dc455" stroke="#5a9e35" stroke-width="0.8"/>
+        <rect x="3" y="16.5" width="26" height="3" rx="1.2" fill="#e84444" stroke="#c43030" stroke-width="0.8"/>
+        <rect x="3" y="19.5" width="26" height="3" rx="1.2" fill="#f5c842" stroke="#c8960a" stroke-width="0.8"/>
+        <path d="M3 22.5 C3 25 5 27 16 27 C27 27 29 25 29 22.5 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.5" stroke-linejoin="round"/>
+        <!-- cheese drip -->
+        <path d="M22 19.5 C22 21 21 22 22 23" stroke="#f5c842" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+      Hamburguesas
+    </h2>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M6 19 C6 12 10 7 23 7 C36 7 40 12 40 19 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.5"/>
+          <ellipse cx="16" cy="9" rx="2.5" ry="1.8" fill="#f0d070" opacity="0.9"/>
+          <ellipse cx="23" cy="8" rx="2" ry="1.5" fill="#f0d070" opacity="0.9"/>
+          <ellipse cx="30" cy="9" rx="2.2" ry="1.6" fill="#f0d070" opacity="0.9"/>
+          <rect x="5" y="19" width="36" height="5" rx="2" fill="#7dc455" stroke="#5a9e35" stroke-width="1"/>
+          <rect x="5" y="24" width="36" height="4.5" rx="1.5" fill="#e84444" stroke="#c43030" stroke-width="0.8"/>
+          <rect x="5" y="28.5" width="36" height="4.5" rx="1.5" fill="#f5c842" stroke="#c8960a" stroke-width="0.8"/>
+          <path d="M5 33 C5 38 8 40 23 40 C38 40 41 38 41 33 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.5"/>
+          <path d="M32 28.5 C32 31 31 33 32 34" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Hamburguesa Clasica</div>
         <div class="prod-desc">Pechuga empanada, lechuga, tomate, doble mozzarella</div>
-        <div class="prod-tags">
-          <span class="tag tag-popular">Clasico</span>
-        </div>
+        <div class="prod-tags"><span class="tag tag-popular">Clasico</span></div>
       </div>
       <div class="prod-precio">$16.000<span>COP</span></div>
     </div>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M5 19 C5 11 9 6 23 6 C37 6 41 11 41 19 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.5"/>
+          <ellipse cx="15" cy="8.5" rx="2.5" ry="1.8" fill="#f0d070" opacity="0.9"/>
+          <ellipse cx="23" cy="7.5" rx="2.5" ry="1.8" fill="#f0d070" opacity="0.9"/>
+          <ellipse cx="31" cy="8.5" rx="2.5" ry="1.8" fill="#f0d070" opacity="0.9"/>
+          <!-- alita encima -->
+          <path d="M35 14 C38 10 42 11 41 15 C40 18 37 17 35 14Z" fill="#D4501F" stroke="#2a1a14" stroke-width="1"/>
+          <rect x="5" y="19" width="36" height="5" rx="2" fill="#7dc455" stroke="#5a9e35" stroke-width="1"/>
+          <rect x="5" y="24" width="36" height="4" rx="1.5" fill="#e84444" stroke="#c43030" stroke-width="0.8"/>
+          <rect x="5" y="28" width="36" height="4" rx="1.5" fill="#f5c842" stroke="#c8960a" stroke-width="0.8"/>
+          <rect x="5" y="32" width="36" height="4" rx="1.5" fill="#f0e0c8" stroke="#c8a060" stroke-width="0.8"/>
+          <path d="M5 36 C5 40 8 42 23 42 C38 42 41 40 41 36 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.5"/>
+          <!-- estrella especial -->
+          <circle cx="37" cy="8" r="6" fill="#E8522A" stroke="#2a1a14" stroke-width="1"/>
+          <path d="M37 4 L38 6.5 L41 6.5 L38.8 8.2 L39.7 11 L37 9.5 L34.3 11 L35.2 8.2 L33 6.5 L36 6.5 Z" fill="#f5c842"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Hamburguesa Fricaji</div>
-        <div class="prod-desc">Pechuga empanada, doble mozz, cheddar, cebolla crujiente, salsa cebolla dulce, aros de cebolla + alita</div>
-        <div class="prod-tags">
-          <span class="tag tag-popular">Especial de la casa</span>
-        </div>
+        <div class="prod-desc">Pechuga empanada, doble mozz, cheddar, cebolla crujiente, salsa cebolla dulce, aros + alita</div>
+        <div class="prod-tags"><span class="tag tag-popular">Especial de la casa</span></div>
       </div>
       <div class="prod-precio">$22.000<span>COP</span></div>
     </div>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M6 19 C6 12 10 7 23 7 C36 7 40 12 40 19 Z" fill="#8B4513" stroke="#5c2a08" stroke-width="1.5"/>
+          <ellipse cx="16" cy="9" rx="2.5" ry="1.8" fill="#f0d070" opacity="0.7"/>
+          <ellipse cx="23" cy="8" rx="2" ry="1.5" fill="#f0d070" opacity="0.7"/>
+          <ellipse cx="30" cy="9" rx="2.2" ry="1.6" fill="#f0d070" opacity="0.7"/>
+          <rect x="5" y="19" width="36" height="5" rx="2" fill="#D4501F"/>
+          <rect x="5" y="24" width="36" height="4.5" rx="1.5" fill="#8B4513" stroke="#5c2a08" stroke-width="0.8"/>
+          <rect x="5" y="28.5" width="36" height="4.5" rx="1.5" fill="#c87941" stroke="#8B5530" stroke-width="0.8"/>
+          <path d="M5 33 C5 38 8 40 23 40 C38 40 41 38 41 33 Z" fill="#8B4513" stroke="#5c2a08" stroke-width="1.5"/>
+          <!-- flame on BBQ -->
+          <path d="M20 22 C21 19 24 18 23 22 C22 25 18 26 19 22Z" fill="#f5a623" opacity="0.9"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Hamburguesa BBQ</div>
         <div class="prod-desc">Pechuga empanada, tocineta, cheddar, salsa BBQ, cebolla caramelizada</div>
-        <div class="prod-tags">
-          <span class="tag tag-picante">Intensa</span>
-        </div>
+        <div class="prod-tags"><span class="tag tag-picante">Intensa</span></div>
       </div>
       <div class="prod-precio">$20.000<span>COP</span></div>
     </div>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <!-- sandwich bun top -->
+          <path d="M6 18 C6 12 10 8 23 8 C36 8 40 12 40 18 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.5"/>
+          <!-- lechuga -->
+          <rect x="5" y="18" width="36" height="5" rx="2" fill="#7dc455" stroke="#5a9e35" stroke-width="1"/>
+          <!-- pechuga -->
+          <rect x="5" y="23" width="36" height="7" rx="2" fill="#f5c842" stroke="#c8960a" stroke-width="1"/>
+          <!-- bun bottom -->
+          <path d="M5 30 C5 35 8 38 23 38 C38 38 41 35 41 30 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.5"/>
+          <ellipse cx="16" cy="9.5" rx="2.2" ry="1.5" fill="#f0d070" opacity="0.8"/>
+          <ellipse cx="23" cy="8.8" rx="2" ry="1.4" fill="#f0d070" opacity="0.8"/>
+          <ellipse cx="30" cy="9.5" rx="2.2" ry="1.5" fill="#f0d070" opacity="0.8"/>
+          <!-- + alita -->
+          <path d="M34 16 C37 12 41 13 40 17 C39 20 36 19 34 16Z" fill="#D4501F" stroke="#2a1a14" stroke-width="1"/>
+          <line x1="35" y1="16.5" x2="39" y2="13" stroke="white" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Sandwich de Pollo</div>
         <div class="prod-desc">Filete de pechuga 120g, lechuga, tomate, doble mozzarella + alita</div>
@@ -451,32 +632,80 @@
     </div>
   </section>
 
+  <!-- ══ AREPAS ══ -->
   <section class="seccion" id="arepas">
-    <h2 class="seccion-titulo">Arepas</h2>
+    <h2 class="seccion-titulo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <ellipse cx="16" cy="18" rx="13" ry="8" fill="#f5c842" stroke="#c8960a" stroke-width="1.5"/>
+        <ellipse cx="16" cy="15" rx="13" ry="8" fill="#f7d55a" stroke="#c8960a" stroke-width="1.5"/>
+        <line x1="10" y1="13" x2="12.5" y2="18" stroke="#c8960a" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+        <line x1="16" y1="11" x2="16" y2="18" stroke="#c8960a" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+        <line x1="22" y1="13" x2="19.5" y2="18" stroke="#c8960a" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+        <path d="M13 7 C13 5 14 3 13 2" stroke="#c8960a" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+        <path d="M19 7 C19 5 18 3 19 2" stroke="#c8960a" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+        <ellipse cx="10" cy="14" rx="2" ry="1" fill="rgba(255,255,255,0.35)"/>
+      </svg>
+      Arepas
+    </h2>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <ellipse cx="23" cy="28" rx="19" ry="11" fill="#f5c842" stroke="#c8960a" stroke-width="1.5"/>
+          <ellipse cx="23" cy="22" rx="19" ry="11" fill="#f7d55a" stroke="#c8960a" stroke-width="1.5"/>
+          <ellipse cx="23" cy="21" rx="13" ry="7" fill="#e8c840" stroke="none" opacity="0.5"/>
+          <line x1="14" y1="18" x2="18" y2="26" stroke="#c8960a" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <line x1="23" y1="15" x2="23" y2="26" stroke="#c8960a" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <line x1="32" y1="18" x2="28" y2="26" stroke="#c8960a" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <path d="M18 9 C18 7 19 5 18 4" stroke="#c8960a" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/>
+          <path d="M28 9 C28 7 27 5 28 4" stroke="#c8960a" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/>
+          <!-- queso derretido -->
+          <path d="M30 22 C30 25 29 27 30 28" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Arepa con Pollo</div>
         <div class="prod-desc">Arepa de maiz, pollo desmechado, queso y salsas</div>
-        <div class="prod-tags">
-          <span class="tag tag-popular">Favorita</span>
-        </div>
+        <div class="prod-tags"><span class="tag tag-popular">Favorita</span></div>
       </div>
       <div class="prod-precio">$12.000<span>COP</span></div>
     </div>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <ellipse cx="23" cy="28" rx="19" ry="11" fill="#f5c842" stroke="#c8960a" stroke-width="1.5"/>
+          <ellipse cx="23" cy="22" rx="19" ry="11" fill="#f7d55a" stroke="#c8960a" stroke-width="1.5"/>
+          <!-- alita encima -->
+          <path d="M30 14 C34 9 40 10 39 15 C38 19 34 18 30 14Z" fill="#D4501F" stroke="#2a1a14" stroke-width="1"/>
+          <line x1="31.5" y1="14.5" x2="37" y2="11" stroke="white" stroke-width="1" stroke-linecap="round"/>
+          <line x1="14" y1="19" x2="18" y2="26" stroke="#c8960a" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+          <line x1="23" y1="16" x2="23" y2="26" stroke="#c8960a" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+          <circle cx="35" cy="9" r="5" fill="#E8522A" stroke="#2a1a14" stroke-width="1"/>
+          <path d="M35 6 L36 8 L38.5 8 L36.5 9.5 L37.2 12 L35 10.5 L32.8 12 L33.5 9.5 L31.5 8 L34 8 Z" fill="#f5c842"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Arepa Fricaji</div>
         <div class="prod-desc">Arepa, pollo, alita encima, doble queso, salsa BBQ</div>
-        <div class="prod-tags">
-          <span class="tag tag-popular">Especial</span>
-        </div>
+        <div class="prod-tags"><span class="tag tag-popular">Especial</span></div>
       </div>
       <div class="prod-precio">$16.000<span>COP</span></div>
     </div>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <ellipse cx="23" cy="28" rx="19" ry="11" fill="#f5c842" stroke="#c8960a" stroke-width="1.5"/>
+          <ellipse cx="23" cy="22" rx="19" ry="11" fill="#f7d55a" stroke="#c8960a" stroke-width="1.5"/>
+          <ellipse cx="23" cy="21" rx="11" ry="6" fill="#c87941" stroke="none" opacity="0.7"/>
+          <line x1="14" y1="19" x2="18" y2="26" stroke="#c8960a" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+          <line x1="23" y1="16" x2="23" y2="26" stroke="#c8960a" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+          <line x1="32" y1="19" x2="28" y2="26" stroke="#c8960a" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+          <path d="M19 9 C19 7 20 5 19 4" stroke="#c8960a" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/>
+          <path d="M27 9 C27 7 26 5 27 4" stroke="#c8960a" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Arepa con Carne</div>
         <div class="prod-desc">Arepa de maiz, carne molida sazonada, queso y salsas</div>
@@ -485,38 +714,131 @@
     </div>
   </section>
 
+  <!-- ══ COMBOS ══ -->
   <section class="seccion" id="combos">
-    <h2 class="seccion-titulo">Combos</h2>
+    <h2 class="seccion-titulo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 2 C18 8 24 10 22 18 C20 24 12 26 10 18 C8 12 12 6 16 2Z" fill="#E8522A" stroke="#c43e1c" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M13 10 C14 13 19 15 18 20 C17 23 13 24 12 20 C11 17 12 13 13 10Z" fill="#f5a623" stroke="none"/>
+        <path d="M15.5 16 C15.5 19 16.5 21 15.5 22.5 C14.5 21 14.5 19 15.5 16Z" fill="#fff8" stroke="none"/>
+      </svg>
+      Combos
+    </h2>
 
     <div class="combo-banner">
-      <h3>Combo Alitas + Bebida</h3>
-      <p>6 alitas con salsa a eleccion + gaseosa personal</p>
-      <div class="combo-precio">$22.000</div>
+      <svg class="combo-ilu" viewBox="0 0 56 56" fill="none">
+        <!-- alita + vaso -->
+        <path d="M6 32 C4 26 5 16 12 11 C19 6 30 9 30 18 C30 26 23 34 15 32 Z" fill="#D4501F" stroke="#2a1a14" stroke-width="1.5"/>
+        <line x1="7" y1="29" x2="26" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="26" cy="12" r="3.5" fill="white" stroke="#c43e1c" stroke-width="1"/>
+        <circle cx="7" cy="29" r="3.5" fill="white" stroke="#c43e1c" stroke-width="1"/>
+        <!-- vaso -->
+        <path d="M34 20 L36 44 L48 44 L50 20 Z" fill="#b3e0f7" stroke="#4a9fc8" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="34" y="20" width="16" height="3" rx="1" fill="#4a9fc8" opacity="0.5"/>
+        <line x1="46" y1="14" x2="45" y2="42" stroke="#e84" stroke-width="2" stroke-linecap="round"/>
+        <rect x="36" y="28" width="4" height="4" rx="1" fill="white" opacity="0.7"/>
+        <rect x="41" y="30" width="4" height="4" rx="1" fill="white" opacity="0.6"/>
+      </svg>
+      <div>
+        <h3>Combo Alitas + Bebida</h3>
+        <p>6 alitas con salsa a eleccion + gaseosa personal</p>
+        <div class="combo-precio">$22.000</div>
+      </div>
     </div>
 
     <div class="combo-banner">
-      <h3>Combo Hamburguesa + Papas + Bebida</h3>
-      <p>Hamburguesa clasica + papas fritas + gaseosa personal</p>
-      <div class="combo-precio">$25.000</div>
+      <svg class="combo-ilu" viewBox="0 0 56 56" fill="none">
+        <!-- burger mini -->
+        <path d="M3 18 C3 14 6 11 16 11 C26 11 29 14 29 18 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.2"/>
+        <rect x="3" y="18" width="26" height="3.5" rx="1.5" fill="#7dc455" stroke="#5a9e35" stroke-width="0.8"/>
+        <rect x="3" y="21.5" width="26" height="3.5" rx="1.2" fill="#c87941" stroke="#8B5530" stroke-width="0.8"/>
+        <path d="M3 25 C3 28 5 30 16 30 C27 30 29 28 29 25 Z" fill="#c87941" stroke="#8B5530" stroke-width="1.2"/>
+        <!-- papas -->
+        <rect x="30" y="20" width="8" height="18" rx="3" fill="#f5c842" stroke="#c8960a" stroke-width="1"/>
+        <rect x="30" y="18" width="8" height="4" rx="2" fill="#E8522A" stroke="#c43e1c" stroke-width="0.8"/>
+        <rect x="32" y="14" width="1.5" height="8" rx="0.7" fill="#f5c842" stroke="#c8960a" stroke-width="0.6"/>
+        <rect x="35" y="13" width="1.5" height="9" rx="0.7" fill="#f5c842" stroke="#c8960a" stroke-width="0.6"/>
+        <!-- vaso -->
+        <path d="M38 22 L39.5 40 L50 40 L51.5 22 Z" fill="#b3e0f7" stroke="#4a9fc8" stroke-width="1.2"/>
+        <line x1="49" y1="16" x2="48" y2="38" stroke="#e84" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h3>Combo Hamburguesa + Papas + Bebida</h3>
+        <p>Hamburguesa clasica + papas fritas + gaseosa personal</p>
+        <div class="combo-precio">$25.000</div>
+      </div>
     </div>
 
     <div class="combo-banner">
-      <h3>Combo Para 2</h3>
-      <p>10 alitas + 2 hamburguesas + 2 bebidas</p>
-      <div class="combo-precio">$65.000</div>
+      <svg class="combo-ilu" viewBox="0 0 56 56" fill="none">
+        <!-- dos alitas -->
+        <path d="M3 30 C1 23 3 13 10 8 C17 3 27 7 26 16 C25 23 18 31 11 29 Z" fill="#D4501F" stroke="#2a1a14" stroke-width="1.2"/>
+        <line x1="5" y1="27" x2="22" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="22" cy="10" r="3" fill="white" stroke="#c43e1c" stroke-width="1"/>
+        <circle cx="5" cy="27" r="3" fill="white" stroke="#c43e1c" stroke-width="1"/>
+        <path d="M20 25 C18 18 20 10 26 5 C32 0 42 4 42 13 C41 20 35 28 27 26 Z" fill="#E8522A" stroke="#2a1a14" stroke-width="1.2"/>
+        <line x1="22" y1="23" x2="38" y2="7" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="38" cy="7" r="3" fill="white" stroke="#c43e1c" stroke-width="1"/>
+        <!-- x2 badge -->
+        <circle cx="48" cy="44" r="8" fill="#f5a623" stroke="#2a1a14" stroke-width="1"/>
+        <text x="48" y="48" text-anchor="middle" font-size="8" font-weight="900" fill="#2a1a14" font-family="Arial">x2</text>
+      </svg>
+      <div>
+        <h3>Combo Para 2</h3>
+        <p>10 alitas + 2 hamburguesas + 2 bebidas</p>
+        <div class="combo-precio">$65.000</div>
+      </div>
     </div>
 
     <div class="combo-banner">
-      <h3>Combo Familiar</h3>
-      <p>15 alitas + 3 hamburguesas Fricaji + 4 bebidas</p>
-      <div class="combo-precio">$95.000</div>
+      <svg class="combo-ilu" viewBox="0 0 56 56" fill="none">
+        <!-- familia de alitas -->
+        <path d="M4 28 C2 22 4 13 10 9 C16 5 25 8 24 16 C23 22 17 29 11 27 Z" fill="#D4501F" stroke="#2a1a14" stroke-width="1.2"/>
+        <path d="M18 26 C16 19 18 11 24 7 C30 3 39 6 38 14 C37 20 31 27 25 25 Z" fill="#E8522A" stroke="#2a1a14" stroke-width="1.2"/>
+        <path d="M31 24 C29 18 31 10 37 6 C43 2 52 6 51 14 C50 20 44 27 38 25 Z" fill="#c43e1c" stroke="#2a1a14" stroke-width="1.2"/>
+        <!-- corona -->
+        <path d="M22 5 L25 10 L28 6 L31 10 L35 5 L34 12 L20 12 Z" fill="#f5c842" stroke="#c8960a" stroke-width="1"/>
+        <circle cx="22" cy="5" r="1.5" fill="#E8522A"/>
+        <circle cx="28" cy="6" r="1.5" fill="#E8522A"/>
+        <circle cx="35" cy="5" r="1.5" fill="#E8522A"/>
+      </svg>
+      <div>
+        <h3>Combo Familiar</h3>
+        <p>15 alitas + 3 hamburguesas Fricaji + 4 bebidas</p>
+        <div class="combo-precio">$95.000</div>
+      </div>
     </div>
   </section>
 
+  <!-- ══ BEBIDAS ══ -->
   <section class="seccion" id="bebidas">
-    <h2 class="seccion-titulo">Bebidas</h2>
+    <h2 class="seccion-titulo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M8 8 L10 28 L22 28 L24 8 Z" fill="#b3e0f7" stroke="#4a9fc8" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="8" y="8" width="16" height="3" rx="1" fill="#4a9fc8" opacity="0.5"/>
+        <rect x="10" y="14" width="4" height="4" rx="1" fill="white" opacity="0.7"/>
+        <rect x="15" y="16" width="4" height="4" rx="1" fill="white" opacity="0.6"/>
+        <line x1="22" y1="4" x2="21" y2="26" stroke="#e84" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="11" cy="12" r="1" fill="white" opacity="0.8"/>
+        <circle cx="15" cy="11" r="0.8" fill="white" opacity="0.7"/>
+      </svg>
+      Bebidas
+    </h2>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M11 10 L14 40 L32 40 L35 10 Z" fill="#e8f8ff" stroke="#4a9fc8" stroke-width="2" stroke-linejoin="round"/>
+          <rect x="11" y="10" width="24" height="5" rx="1.5" fill="#4a9fc8" opacity="0.4"/>
+          <rect x="14" y="20" width="6" height="6" rx="1.5" fill="white" opacity="0.75"/>
+          <rect x="22" y="22" width="6" height="6" rx="1.5" fill="white" opacity="0.65"/>
+          <line x1="33" y1="4" x2="31" y2="38" stroke="#E8522A" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="15" cy="16" r="1.5" fill="white" opacity="0.8"/>
+          <circle cx="21" cy="15" r="1.2" fill="white" opacity="0.7"/>
+          <!-- logo lata -->
+          <rect x="16" y="26" width="10" height="7" rx="1" fill="#E8522A" opacity="0.3"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Gaseosa Personal</div>
         <div class="prod-desc">Coca-Cola, Sprite, Manzana — 250ml</div>
@@ -525,6 +847,18 @@
     </div>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M9 8 L12 40 L34 40 L37 8 Z" fill="#e8f8ff" stroke="#4a9fc8" stroke-width="2" stroke-linejoin="round"/>
+          <rect x="9" y="8" width="28" height="5" rx="1.5" fill="#4a9fc8" opacity="0.4"/>
+          <rect x="12" y="18" width="7" height="7" rx="1.5" fill="white" opacity="0.75"/>
+          <rect x="21" y="20" width="7" height="7" rx="1.5" fill="white" opacity="0.65"/>
+          <line x1="35" y1="3" x2="33" y2="38" stroke="#E8522A" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="14" cy="15" r="1.5" fill="white" opacity="0.8"/>
+          <circle cx="21" cy="14" r="1.2" fill="white" opacity="0.7"/>
+          <circle cx="27" cy="15" r="1" fill="white" opacity="0.6"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Gaseosa Grande</div>
         <div class="prod-desc">500ml — para compartir</div>
@@ -533,6 +867,17 @@
     </div>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M12 10 L14 38 L32 38 L34 10 Z" fill="#daf5ff" stroke="#70c8e8" stroke-width="2" stroke-linejoin="round"/>
+          <rect x="12" y="10" width="22" height="4" rx="1.5" fill="#70c8e8" opacity="0.4"/>
+          <rect x="15" y="18" width="5" height="5" rx="1.5" fill="white" opacity="0.8"/>
+          <rect x="22" y="20" width="5" height="5" rx="1.5" fill="white" opacity="0.7"/>
+          <!-- water drops -->
+          <path d="M10 20 C10 22 9 23 10 24 C11 23 11 22 10 20Z" fill="#70c8e8" opacity="0.6"/>
+          <path d="M36 24 C36 26 35 27 36 28 C37 27 37 26 36 24Z" fill="#70c8e8" opacity="0.5"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Agua Botella</div>
         <div class="prod-desc">600ml sin gas</div>
@@ -541,6 +886,19 @@
     </div>
 
     <div class="producto">
+      <div class="prod-icon">
+        <svg viewBox="0 0 46 46" fill="none">
+          <path d="M11 10 L14 40 L32 40 L35 10 Z" fill="#ffd580" stroke="#c8960a" stroke-width="2" stroke-linejoin="round"/>
+          <rect x="11" y="10" width="24" height="5" rx="1.5" fill="#c8960a" opacity="0.4"/>
+          <rect x="14" y="20" width="6" height="6" rx="1.5" fill="white" opacity="0.7"/>
+          <rect x="22" y="22" width="6" height="6" rx="1.5" fill="white" opacity="0.6"/>
+          <line x1="33" y1="4" x2="31" y2="38" stroke="#5a9e35" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="15" cy="16" r="1.5" fill="white" opacity="0.8"/>
+          <circle cx="21" cy="15" r="1.2" fill="white" opacity="0.7"/>
+          <!-- mango icon -->
+          <ellipse cx="23" cy="30" rx="4" ry="5" fill="#f5a623" stroke="#c8960a" stroke-width="0.8" opacity="0.6"/>
+        </svg>
+      </div>
       <div class="prod-info">
         <div class="prod-nombre">Jugos Hit / Del Valle</div>
         <div class="prod-desc">Mango, maracuya, naranja, mora</div>
@@ -549,96 +907,127 @@
     </div>
   </section>
 
+  <!-- ══ SALSAS ══ -->
   <section class="seccion" id="salsas">
-    <h2 class="seccion-titulo">Nuestras Salsas</h2>
+    <h2 class="seccion-titulo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <rect x="11" y="4" width="10" height="18" rx="3.5" fill="#E8522A" stroke="#c43e1c" stroke-width="1.5"/>
+        <rect x="12.5" y="2" width="7" height="4" rx="1.5" fill="#c43e1c" stroke="#8B2800" stroke-width="1"/>
+        <rect x="13" y="11" width="6" height="7" rx="1" fill="white" opacity="0.35"/>
+        <path d="M16 22 C16 24.5 15 26.5 16 28 C17 26.5 17 24.5 16 22Z" fill="#E8522A" stroke="#c43e1c" stroke-width="0.8"/>
+        <path d="M13 6.5 C14 7 14.5 8 14 8.5" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+      </svg>
+      Nuestras Salsas
+    </h2>
 
     <div class="salsas-box">
       <div class="salsas-titulo">Elige tu salsa favorita para las alitas</div>
       <div class="salsas-grid">
 
         <div class="salsa-pill">
+          <svg viewBox="0 0 22 22" fill="none">
+            <rect x="7" y="3" width="8" height="13" rx="2.5" fill="#8B4513" stroke="#5c2a08" stroke-width="1"/>
+            <rect x="8.5" y="2" width="5" height="2.5" rx="1" fill="#5c2a08"/>
+            <path d="M11 16 C11 18 10.2 19 11 20 C11.8 19 11.5 18 11 16Z" fill="#8B4513"/>
+            <rect x="8.5" y="8" width="5" height="5" rx="0.8" fill="white" opacity="0.25"/>
+          </svg>
           BBQ Clasica
-          <div class="salsa-nivel">
-            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
-          </div>
+          <div class="salsa-nivel"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
         </div>
 
         <div class="salsa-pill">
+          <svg viewBox="0 0 22 22" fill="none">
+            <rect x="7" y="3" width="8" height="13" rx="2.5" fill="#f5c842" stroke="#c8960a" stroke-width="1"/>
+            <rect x="8.5" y="2" width="5" height="2.5" rx="1" fill="#c8960a"/>
+            <path d="M11 16 C11 18 10.2 19 11 20 C11.8 19 11.5 18 11 16Z" fill="#f5c842"/>
+            <ellipse cx="11" cy="10" rx="2" ry="2.5" fill="rgba(255,255,255,0.3)"/>
+          </svg>
           Limon Pimienta
-          <div class="salsa-nivel">
-            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
-          </div>
+          <div class="salsa-nivel"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
         </div>
 
         <div class="salsa-pill">
+          <svg viewBox="0 0 22 22" fill="none">
+            <rect x="7" y="3" width="8" height="13" rx="2.5" fill="#f0f0e0" stroke="#aaa060" stroke-width="1"/>
+            <rect x="8.5" y="2" width="5" height="2.5" rx="1" fill="#aaa060"/>
+            <path d="M11 16 C11 18 10.2 19 11 20 C11.8 19 11.5 18 11 16Z" fill="#f0f0e0"/>
+            <circle cx="11" cy="10" r="2.5" fill="rgba(200,200,100,0.3)"/>
+          </svg>
           Ajo Parmesano
-          <div class="salsa-nivel">
-            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
-          </div>
+          <div class="salsa-nivel"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
         </div>
 
         <div class="salsa-pill">
+          <svg viewBox="0 0 22 22" fill="none">
+            <rect x="7" y="3" width="8" height="13" rx="2.5" fill="#c43e1c" stroke="#8B2000" stroke-width="1"/>
+            <rect x="8.5" y="2" width="5" height="2.5" rx="1" fill="#8B2000"/>
+            <path d="M11 16 C11 18 10.2 19 11 20 C11.8 19 11.5 18 11 16Z" fill="#c43e1c"/>
+            <path d="M10 7 C10.5 9 12 10 11.5 12" stroke="rgba(255,200,180,0.6)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
           BBQ Picante
-          <div class="salsa-nivel">
-            <div class="dot on"></div><div class="dot on"></div><div class="dot"></div>
-          </div>
+          <div class="salsa-nivel"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div>
         </div>
 
         <div class="salsa-pill">
+          <svg viewBox="0 0 22 22" fill="none">
+            <rect x="7" y="3" width="8" height="13" rx="2.5" fill="#E8522A" stroke="#c43e1c" stroke-width="1"/>
+            <rect x="8.5" y="2" width="5" height="2.5" rx="1" fill="#c43e1c"/>
+            <path d="M11 16 C11 18 10.2 19 11 20 C11.8 19 11.5 18 11 16Z" fill="#E8522A"/>
+            <path d="M11 5 C12 7 14 8 13 11 C12 13 10 13 10 11 C9 9 10 7 11 5Z" fill="#f5a623" opacity="0.9"/>
+          </svg>
           Buffalo
-          <div class="salsa-nivel">
-            <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div>
-          </div>
+          <div class="salsa-nivel"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div>
         </div>
 
         <div class="salsa-pill">
+          <svg viewBox="0 0 22 22" fill="none">
+            <rect x="7" y="3" width="8" height="13" rx="2.5" fill="#f5c842" stroke="#c8960a" stroke-width="1"/>
+            <rect x="8.5" y="2" width="5" height="2.5" rx="1" fill="#c8960a"/>
+            <path d="M11 16 C11 18 10.2 19 11 20 C11.8 19 11.5 18 11 16Z" fill="#f5c842"/>
+            <rect x="8.5" y="8" width="5" height="4" rx="0.8" fill="white" opacity="0.35"/>
+          </svg>
           Miel Mostaza
-          <div class="salsa-nivel">
-            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
-          </div>
+          <div class="salsa-nivel"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
         </div>
 
         <div class="salsa-pill">
+          <svg viewBox="0 0 22 22" fill="none">
+            <rect x="7" y="3" width="8" height="13" rx="2.5" fill="#4a9e70" stroke="#2a6e40" stroke-width="1"/>
+            <rect x="8.5" y="2" width="5" height="2.5" rx="1" fill="#2a6e40"/>
+            <path d="M11 16 C11 18 10.2 19 11 20 C11.8 19 11.5 18 11 16Z" fill="#4a9e70"/>
+            <rect x="8.5" y="8" width="5" height="4" rx="0.8" fill="white" opacity="0.25"/>
+          </svg>
           Teriyaki
-          <div class="salsa-nivel">
-            <div class="dot on"></div><div class="dot on"></div><div class="dot"></div>
-          </div>
+          <div class="salsa-nivel"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div>
         </div>
 
         <div class="salsa-pill">
+          <svg viewBox="0 0 22 22" fill="none">
+            <rect x="7" y="3" width="8" height="13" rx="2.5" fill="#c87041" stroke="#8B4520" stroke-width="1"/>
+            <rect x="8.5" y="2" width="5" height="2.5" rx="1" fill="#8B4520"/>
+            <path d="M11 16 C11 18 10.2 19 11 20 C11.8 19 11.5 18 11 16Z" fill="#c87041"/>
+            <ellipse cx="11" cy="10" rx="2" ry="2.5" fill="rgba(255,255,255,0.2)"/>
+          </svg>
           Cebolla Dulce
-          <div class="salsa-nivel">
-            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
-          </div>
+          <div class="salsa-nivel"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
         </div>
 
       </div>
-      <p style="font-size:0.75rem;color:var(--texto-suave);margin-top:12px;text-align:center;">
-        Puntos = nivel de picante | Pide sin picante si lo prefieres suave
+      <p style="font-size:0.74rem;color:var(--texto-suave);margin-top:14px;text-align:center;">
+        Puntos = nivel de picante &nbsp;&middot;&nbsp; Pide sin picante si lo prefieres suave
       </p>
     </div>
   </section>
 
 </main>
 
+<!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-grid">
-    <div class="info-card">
-      <strong>Sedes</strong>
-      Mirador de Villavento<br>Montebonito
-    </div>
-    <div class="info-card">
-      <strong>Horario</strong>
-      Lun y Mie–Dom<br>4:30 PM – 11:00 PM<br><em style="color:#c43e1c">Martes: Cerrado</em>
-    </div>
-    <div class="info-card">
-      <strong>Pedidos</strong>
-      310 459 6548<br>305 351 5985
-    </div>
-    <div class="info-card">
-      <strong>Redes</strong>
-      @fricaji<br>en Instagram
-    </div>
+    <div class="info-card"><strong>Sedes</strong>Mirador de Villavento<br>Montebonito</div>
+    <div class="info-card"><strong>Horario</strong>Lun y Mie&ndash;Dom<br>4:30 PM &ndash; 11:00 PM<br><em style="color:#c43e1c">Martes: Cerrado</em></div>
+    <div class="info-card"><strong>Pedidos</strong>310 459 6548<br>305 351 5985</div>
+    <div class="info-card"><strong>Redes</strong>@fricaji<br>en Instagram</div>
   </div>
 
   <a class="whatsapp-btn" href="https://wa.me/573104596548?text=Hola%20Fricaji!%20Quiero%20hacer%20un%20pedido" target="_blank">
@@ -646,15 +1035,12 @@
     Pedir por WhatsApp
   </a>
 
-  <p class="footer-brand" style="margin-top:16px;">
-    Hecho con amor — <b>Fricaji</b> · Dosquebradas, Risaralda
-  </p>
-
+  <p class="footer-brand">Hecho con amor &mdash; <b>Fricaji</b> &middot; Dosquebradas, Risaralda</p>
   <a class="staff-link" href="/negocio.html">Acceso negocio</a>
 </footer>
 
 <script>
-  function scrollTo(id, btn) {
+  function irA(id, btn) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const el = document.getElementById(id);
@@ -664,11 +1050,9 @@
       window.scrollTo({ top, behavior: 'smooth' });
     }
   }
-
   const secciones = ['alitas','hamburguesas','arepas','combos','bebidas','salsas'];
   const btns = document.querySelectorAll('.cat-btn');
   const nav = document.getElementById('nav');
-
   window.addEventListener('scroll', () => {
     const navH = nav.offsetHeight;
     let actual = 0;
@@ -679,6 +1063,5 @@
     btns.forEach((b, i) => b.classList.toggle('active', i === actual));
   });
 </script>
-
 </body>
 </html>
