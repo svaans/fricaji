@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Fricaji — POS</title>
+  <style>
+    :root {
+      --rojo: #E8522A;
+      --rojo-oscuro: #c43e1c;
+      --rojo-claro: #fde8e0;
+      --blanco: #ffffff;
+      --gris: #f5f0ee;
+      --gris2: #ecddd8;
+      --texto: #2a1a14;
+      --texto-suave: #9a7a70;
+      --verde: #27ae60;
+      --verde-claro: #e8f5e9;
+      --azul: #2980b9;
+      --azul-claro: #e8f4fd;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; overflow: hidden; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--gris); color: var(--texto); display: flex; flex-direction: column; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--rojo);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      flex-shrink: 0;
+      gap: 10px;
+    }
+    .topbar-brand { font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+    .topbar-info { font-size: 0.78rem; opacity: 0.9; text-align: right; }
+    .topbar-info span { display: block; }
+    .turno-badge {
+      background: rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* ── LAYOUT PRINCIPAL ── */
+    .pos-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ══════════════════════
+       PANEL IZQUIERDO — MENÚ
+    ══════════════════════ */
+    .panel-menu {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-right: 2px solid var(--gris2);
+    }
+
+    /* Categorías */
+    .cats {
+      display: flex;
+      gap: 0;
+      background: var(--blanco);
+      border-bottom: 2px solid var(--gris2);
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+    .cats::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      flex-shrink: 0;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      color: var(--texto-suave);
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .cat-tab.active { color: var(--rojo); border-bottom-color: var(--rojo); background: var(--rojo-claro); }
+
+    /* Grid productos */
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      padding: 12px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .prod-card {
+      background: var(--blanco);
+      border-radius: 14px;
+      padding: 12px 10px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.15s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      user-select: none;
+    }
+    .prod-card:active { transform: scale(0.94); background: var(--rojo-claro); border-color: var(--rojo); }
+    .prod-card .icon { font-size: 2rem; display: block; margin-bottom: 6px; }
+    .prod-card .nombre { font-size: 0.78rem; font-weight: 700; line-height: 1.2; color: var(--texto); }
+    .prod-card .precio { font-size: 0.88rem; font-weight: 800; color: var(--rojo); margin-top: 4px; }
+
+    /* ══════════════════════
+       PANEL DERECHO — ORDEN
+    ══════════════════════ */
+    .panel-orden {
+      width: 300px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--blanco);
+      overflow: hidden;
+    }
+
+    .orden-header {
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--gris2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .orden-titulo { font-size: 1rem; font-weight: 800; color: var(--texto); }
+    .orden-num { font-size: 0.75rem; color: var(--texto-suave); }
+    .btn-limpiar {
+      font-size: 0.72rem;
+      color: var(--rojo);
+      border: 1px solid var(--rojo);
+      background: transparent;
+      border-radius: 6px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Items de la orden */
+    .orden-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+    .orden-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--texto-suave);
+      font-size: 0.85rem;
+      gap: 8px;
+    }
+    .orden-empty .icono { font-size: 2.5rem; opacity: 0.4; }
+
+    .item-orden {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--gris2);
+    }
+    .item-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .item-info { flex: 1; min-width: 0; }
+    .item-nombre { font-size: 0.82rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-unitario { font-size: 0.72rem; color: var(--texto-suave); }
+    .item-controles { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .btn-qty {
+      width: 26px; height: 26px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-menos { background: var(--gris2); color: var(--rojo-oscuro); }
+    .btn-mas   { background: var(--rojo); color: white; }
+    .qty-num { font-size: 0.9rem; font-weight: 800; min-width: 18px; text-align: center; }
+    .item-total { font-size: 0.85rem; font-weight: 800; color: var(--rojo); min-width: 56px; text-align: right; }
+
+    /* Resumen y pago */
+    .orden-footer {
+      border-top: 2px solid var(--gris2);
+      padding: 12px 14px;
+      flex-shrink: 0;
+    }
+    .resumen-linea {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--texto-suave);
+      margin-bottom: 4px;
+    }
+    .resumen-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--texto);
+      padding: 8px 0;
+      border-top: 2px solid var(--gris2);
+      margin: 6px 0 10px;
+    }
+    .resumen-total .monto { color: var(--rojo); }
+
+    /* Método de pago */
+    .metodos {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .metodo-btn {
+      padding: 8px 4px;
+      border-radius: 10px;
+      border: 2px solid var(--gris2);
+      background: var(--gris);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      color: var(--texto-suave);
+      transition: all 0.15s;
+    }
+    .metodo-btn.selected { border-color: var(--rojo); background: var(--rojo-claro); color: var(--rojo-oscuro); }
+    .metodo-icon { font-size: 1.1rem; display: block; margin-bottom: 2px; }
+
+    /* Efectivo — cambio */
+    .efectivo-box {
+      display: none;
+      gap: 6px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .efectivo-box.show { display: flex; }
+    .efectivo-box label { font-size: 0.78rem; color: var(--texto-suave); flex-shrink: 0; }
+    .efectivo-box input {
+      flex: 1;
+      border: 2px solid var(--gris2);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      outline: none;
+      color: var(--texto);
+    }
+    .efectivo-box input:focus { border-color: var(--rojo); }
+    .cambio-display {
+      display: none;
+      background: var(--verde-claro);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      color: var(--verde);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .cambio-display.show { display: block; }
+
+    .btn-cobrar {
+      width: 100%;
+      padding: 14px;
+      background: var(--rojo);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-cobrar:active { background: var(--rojo-oscuro); }
+    .btn-cobrar:disabled { background: var(--gris2); color: var(--texto-suave); cursor: not-allowed; }
+
+    /* ── MODAL TICKET ── */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .overlay.show { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      width: 90%;
+      max-width: 340px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .ticket-header { text-align: center; margin-bottom: 16px; }
+    .ticket-header h2 { font-size: 1.5rem; color: var(--rojo); font-weight: 900; }
+    .ticket-header p { font-size: 0.82rem; color: var(--texto-suave); }
+    .ticket-linea {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      padding: 4px 0;
+      border-bottom: 1px dashed var(--gris2);
+    }
+    .ticket-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1rem;
+      font-weight: 900;
+      padding: 10px 0 6px;
+    }
+    .ticket-total span:last-child { color: var(--rojo); }
+    .ticket-cambio {
+      text-align: center;
+      background: var(--verde-claro);
+      color: var(--verde);
+      border-radius: 10px;
+      padding: 8px;
+      font-weight: 700;
+      margin: 8px 0;
+      font-size: 0.9rem;
+    }
+    .ticket-gracias {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--texto-suave);
+    }
+    .modal-btns { display: flex; gap: 10px; margin-top: 16px; }
+    .btn-modal {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .btn-imprimir { background: var(--gris2); color: var(--texto); }
+    .btn-nuevo { background: var(--rojo); color: white; }
+
+    /* ── HISTORIAL ── */
+    .panel-historial {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--blanco);
+      z-index: 150;
+      flex-direction: column;
+    }
+    .panel-historial.show { display: flex; }
+    .hist-header {
+      background: var(--rojo);
+      color: white;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hist-header h2 { font-size: 1.1rem; font-weight: 800; }
+    .btn-cerrar-hist { background: rgba(255,255,255,0.2); border: none; color: white; border-radius: 8px; padding: 6px 12px; font-weight: 700; cursor: pointer; }
+    .hist-list { overflow-y: auto; flex: 1; padding: 12px; }
+    .hist-item {
+      background: var(--gris);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .hist-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .hist-num { font-weight: 800; color: var(--rojo); }
+    .hist-hora { font-size: 0.78rem; color: var(--texto-suave); }
+    .hist-productos { font-size: 0.8rem; color: var(--texto-suave); margin-bottom: 4px; }
+    .hist-total { font-size: 1rem; font-weight: 800; }
+    .hist-metodo { font-size: 0.75rem; background: var(--rojo-claro); color: var(--rojo-oscuro); border-radius: 6px; padding: 2px 8px; display: inline-block; }
+
+    /* Botón historial en topbar */
+    .btn-hist {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Resumen ventas */
+    .resumen-ventas {
+      background: var(--rojo-claro);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      text-align: center;
+    }
+    .rv-item label { font-size: 0.7rem; color: var(--texto-suave); display: block; }
+    .rv-item span { font-size: 1rem; font-weight: 800; color: var(--rojo-oscuro); }
+
+    /* Responsive < 520px: orden debajo */
+    @media (max-width: 560px) {
+      .pos-layout { flex-direction: column; }
+      .panel-orden { width: 100%; height: 280px; border-right: none; border-top: 2px solid var(--gris2); }
+      .productos-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ TOP BAR ══ -->
+<div class="topbar">
+  <div class="topbar-brand">❤️ Fricaji <span class="turno-badge" id="turno-label">POS</span></div>
+  <div style="flex:1"></div>
+  <div class="topbar-info">
+    <span id="reloj">--:--</span>
+    <span id="fecha-hoy" style="font-size:0.7rem;opacity:0.8"></span>
+  </div>
+  <button class="btn-hist" onclick="abrirHistorial()">📋 Ventas</button>
+</div>
+
+<!-- ══ LAYOUT ══ -->
+<div class="pos-layout">
+
+  <!-- ═══ PANEL MENÚ ═══ -->
+  <div class="panel-menu">
+    <!-- Categorías -->
+    <div class="cats" id="cats"></div>
+
+    <!-- Grid -->
+    <div class="productos-grid" id="grid-productos"></div>
+  </div>
+
+  <!-- ═══ PANEL ORDEN ═══ -->
+  <div class="panel-orden">
+    <div class="orden-header">
+      <div>
+        <div class="orden-titulo">Orden <span id="orden-num" style="color:var(--rojo)">#001</span></div>
+        <div class="orden-num" id="items-count">0 productos</div>
+      </div>
+      <button class="btn-limpiar" onclick="limpiarOrden()">🗑 Vaciar</button>
+    </div>
+
+    <div class="orden-items" id="orden-items">
+      <div class="orden-empty" id="empty-msg">
+        <span class="icono">🛒</span>
+        <span>Toca un producto para agregarlo</span>
+      </div>
+    </div>
+
+    <div class="orden-footer">
+      <!-- Resumen -->
+      <div class="resumen-linea"><span>Subtotal</span><span id="subtotal-val">$0</span></div>
+      <div class="resumen-linea"><span>Descuento</span><span id="desc-val" style="color:var(--verde)">$0</span></div>
+      <div class="resumen-total"><span>TOTAL</span><span class="monto" id="total-val">$0</span></div>
+
+      <!-- Método de pago -->
+      <div class="metodos">
+        <div class="metodo-btn selected" data-m="efectivo" onclick="selMetodo(this)">
+          <span class="metodo-icon">💵</span>Efectivo
+        </div>
+        <div class="metodo-btn" data-m="nequi" onclick="selMetodo(this)">
+          <span class="metodo-icon">📱</span>Nequi
+        </div>
+        <div class="metodo-btn" data-m="tarjeta" onclick="selMetodo(this)">
+          <span class="metodo-icon">💳</span>Tarjeta
+        </div>
+      </div>
+
+      <!-- Efectivo recibido -->
+      <div class="efectivo-box show" id="efectivo-box">
+        <label>Recibido $</label>
+        <input type="number" id="recibido-input" placeholder="0" oninput="calcCambio()" />
+      </div>
+      <div class="cambio-display" id="cambio-display"></div>
+
+      <button class="btn-cobrar" id="btn-cobrar" onclick="cobrar()" disabled>
+        Cobrar $0
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL TICKET ══ -->
+<div class="overlay" id="overlay-ticket">
+  <div class="modal" id="modal-ticket">
+    <div class="ticket-header">
+      <h2>❤️ Fricaji</h2>
+      <p id="tick-fecha"></p>
+      <p style="font-size:0.78rem;margin-top:2px" id="tick-num"></p>
+    </div>
+    <div id="tick-items"></div>
+    <div class="ticket-total">
+      <span>TOTAL</span><span id="tick-total"></span>
+    </div>
+    <div class="ticket-cambio" id="tick-cambio" style="display:none"></div>
+    <div class="ticket-gracias">¡Gracias por tu compra! 🍗❤️<br>@fricaji</div>
+    <div class="modal-btns">
+      <button class="btn-modal btn-imprimir" onclick="imprimirTicket()">🖨️ Imprimir</button>
+      <button class="btn-modal btn-nuevo" onclick="nuevaOrden()">✅ Nueva orden</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PANEL HISTORIAL ══ -->
+<div class="panel-historial" id="panel-historial">
+  <div class="hist-header">
+    <h2>📋 Ventas del turno</h2>
+    <button class="btn-cerrar-hist" onclick="cerrarHistorial()">✕ Cerrar</button>
+  </div>
+  <div class="resumen-ventas" id="resumen-ventas">
+    <div class="rv-item"><label>Órdenes</label><span id="rv-ordenes">0</span></div>
+    <div class="rv-item"><label>Total ventas</label><span id="rv-total">$0</span></div>
+    <div class="rv-item"><label>Promedio</label><span id="rv-prom">$0</span></div>
+  </div>
+  <div class="hist-list" id="hist-list"></div>
+</div>
+
+<script>
+// ══════════════════════════════
+// DATOS — MENÚ
+// ══════════════════════════════
+const MENU = [
+  // ALITAS
+  { id: 1, cat: 'Alitas', icon: '🍗', nombre: 'Alitas x 6',         precio: 18000 },
+  { id: 2, cat: 'Alitas', icon: '🍗', nombre: 'Alitas x 10',        precio: 28000 },
+  { id: 3, cat: 'Alitas', icon: '🍗', nombre: 'Alitas x 15',        precio: 40000 },
+  { id: 4, cat: 'Alitas', icon: '🌶️', nombre: 'Alitas Doble Salsa', precio: 21000 },
+  // HAMBURGUESAS
+  { id: 5, cat: 'Hamburguesas', icon: '🍔', nombre: 'H. Clásica',   precio: 16000 },
+  { id: 6, cat: 'Hamburguesas', icon: '🍔', nombre: 'H. Fricaji',   precio: 22000 },
+  { id: 7, cat: 'Hamburguesas', icon: '🍔', nombre: 'H. BBQ',       precio: 20000 },
+  { id: 8, cat: 'Hamburguesas', icon: '🍔', nombre: 'Sándwich Pollo',precio: 18000 },
+  // AREPAS
+  { id: 9,  cat: 'Arepas', icon: '🫓', nombre: 'Arepa con Pollo',   precio: 12000 },
+  { id: 10, cat: 'Arepas', icon: '🫓', nombre: 'Arepa Fricaji',     precio: 16000 },
+  { id: 11, cat: 'Arepas', icon: '🫓', nombre: 'Arepa con Carne',   precio: 13000 },
+  // COMBOS
+  { id: 12, cat: 'Combos', icon: '🔥', nombre: 'Combo Alitas+Beb',  precio: 22000 },
+  { id: 13, cat: 'Combos', icon: '🔥', nombre: 'Combo H+Papas+Beb', precio: 25000 },
+  { id: 14, cat: 'Combos', icon: '🔥', nombre: 'Combo Para 2',      precio: 65000 },
+  { id: 15, cat: 'Combos', icon: '🔥', nombre: 'Combo Familiar',    precio: 95000 },
+  // BEBIDAS
+  { id: 16, cat: 'Bebidas', icon: '🥤', nombre: 'Gaseosa Personal', precio: 3500 },
+  { id: 17, cat: 'Bebidas', icon: '🥤', nombre: 'Gaseosa Grande',   precio: 6000 },
+  { id: 18, cat: 'Bebidas', icon: '💧', nombre: 'Agua',             precio: 3000 },
+  { id: 19, cat: 'Bebidas', icon: '🧃', nombre: 'Jugo Hit',         precio: 4000 },
+];
+
+const CATS = [...new Set(MENU.map(p => p.cat))];
+
+// ══════════════════════════════
+// ESTADO
+// ══════════════════════════════
+let orden = [];           // { prod, qty }
+let metodo = 'efectivo';
+let numOrden = 1;
+let historial = [];
+let catActiva = CATS[0];
+
+// ══════════════════════════════
+// RENDER CATEGORÍAS
+// ══════════════════════════════
+function renderCats() {
+  const el = document.getElementById('cats');
+  el.innerHTML = CATS.map(c => `
+    <div class="cat-tab ${c===catActiva?'active':''}" onclick="cambiarCat('${c}')">${iconCat(c)} ${c}</div>
+  `).join('');
+}
+function iconCat(c) {
+  return {Alitas:'🍗',Hamburguesas:'🍔',Arepas:'🫓',Combos:'🔥',Bebidas:'🥤'}[c]||'';
+}
+function cambiarCat(c) {
+  catActiva = c;
+  renderCats();
+  renderGrid();
+}
+
+// ══════════════════════════════
+// RENDER GRID
+// ══════════════════════════════
+function renderGrid() {
+  const prods = MENU.filter(p => p.cat === catActiva);
+  document.getElementById('grid-productos').innerHTML = prods.map(p => `
+    <div class="prod-card" onclick="agregar(${p.id})">
+      <span class="icon">${p.icon}</span>
+      <div class="nombre">${p.nombre}</div>
+      <div class="precio">${fmt(p.precio)}</div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════
+// ORDEN
+// ══════════════════════════════
+function agregar(id) {
+  const prod = MENU.find(p => p.id === id);
+  const item = orden.find(i => i.prod.id === id);
+  if (item) item.qty++;
+  else orden.push({ prod, qty: 1 });
+  renderOrden();
+}
+
+function cambiarQty(id, delta) {
+  const idx = orden.findIndex(i => i.prod.id === id);
+  if (idx === -1) return;
+  orden[idx].qty += delta;
+  if (orden[idx].qty <= 0) orden.splice(idx, 1);
+  renderOrden();
+}
+
+function limpiarOrden() {
+  orden = [];
+  renderOrden();
+}
+
+function renderOrden() {
+  const cont = document.getElementById('orden-items');
+  const empty = document.getElementById('empty-msg');
+
+  if (orden.length === 0) {
+    cont.innerHTML = '';
+    cont.appendChild(empty);
+    empty.style.display = 'flex';
+  } else {
+    cont.innerHTML = orden.map(i => `
+      <div class="item-orden">
+        <div class="item-icon">${i.prod.icon}</div>
+        <div class="item-info">
+          <div class="item-nombre">${i.prod.nombre}</div>
+          <div class="item-unitario">${fmt(i.prod.precio)} c/u</div>
+        </div>
+        <div class="item-controles">
+          <button class="btn-qty btn-menos" onclick="cambiarQty(${i.prod.id},-1)">−</button>
+          <span class="qty-num">${i.qty}</span>
+          <button class="btn-qty btn-mas" onclick="cambiarQty(${i.prod.id},+1)">+</button>
+        </div>
+        <div class="item-total">${fmt(i.prod.precio * i.qty)}</div>
+      </div>
+    `).join('');
+  }
+
+  const total = calcTotal();
+  const count = orden.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('items-count').textContent = `${count} producto${count!==1?'s':''}`;
+  document.getElementById('subtotal-val').textContent = fmt(total);
+  document.getElementById('total-val').textContent = fmt(total);
+  document.getElementById('btn-cobrar').textContent = `Cobrar ${fmt(total)}`;
+  document.getElementById('btn-cobrar').disabled = orden.length === 0;
+  calcCambio();
+}
+
+function calcTotal() {
+  return orden.reduce((s, i) => s + i.prod.precio * i.qty, 0);
+}
+
+// ══════════════════════════════
+// MÉTODO DE PAGO
+// ══════════════════════════════
+function selMetodo(el) {
+  document.querySelectorAll('.metodo-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  metodo = el.dataset.m;
+  const box = document.getElementById('efectivo-box');
+  box.classList.toggle('show', metodo === 'efectivo');
+  if (metodo !== 'efectivo') {
+    document.getElementById('cambio-display').classList.remove('show');
+  } else {
+    calcCambio();
+  }
+}
+
+function calcCambio() {
+  if (metodo !== 'efectivo') return;
+  const recibido = parseFloat(document.getElementById('recibido-input').value) || 0;
+  const total = calcTotal();
+  const disp = document.getElementById('cambio-display');
+  if (recibido > 0 && recibido >= total) {
+    disp.textContent = `Cambio: ${fmt(recibido - total)}`;
+    disp.classList.add('show');
+  } else {
+    disp.classList.remove('show');
+  }
+}
+
+// ══════════════════════════════
+// COBRAR
+// ══════════════════════════════
+function cobrar() {
+  if (orden.length === 0) return;
+  const total = calcTotal();
+  const recibido = parseFloat(document.getElementById('recibido-input').value) || 0;
+  const cambio = metodo === 'efectivo' ? recibido - total : 0;
+  const ahora = new Date();
+
+  // Registrar en historial
+  const registro = {
+    num: String(numOrden).padStart(3, '0'),
+    hora: ahora.toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit'}),
+    items: [...orden],
+    total,
+    metodo,
+    cambio: Math.max(0, cambio),
+  };
+  historial.push(registro);
+
+  // Mostrar ticket
+  document.getElementById('tick-fecha').textContent =
+    ahora.toLocaleDateString('es-CO', {weekday:'long', year:'numeric', month:'long', day:'numeric'}) +
+    ' · ' + ahora.toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit'});
+  document.getElementById('tick-num').textContent = `Orden #${registro.num}`;
+  document.getElementById('tick-items').innerHTML = registro.items.map(i => `
+    <div class="ticket-linea">
+      <span>${i.prod.icon} ${i.qty}x ${i.prod.nombre}</span>
+      <span>${fmt(i.prod.precio * i.qty)}</span>
+    </div>
+  `).join('');
+  document.getElementById('tick-total').textContent = fmt(total);
+  const tc = document.getElementById('tick-cambio');
+  if (metodo === 'efectivo' && cambio > 0) {
+    tc.style.display = 'block';
+    tc.textContent = `💵 Cambio: ${fmt(cambio)}`;
+  } else {
+    tc.style.display = 'none';
+  }
+
+  document.getElementById('overlay-ticket').classList.add('show');
+}
+
+function imprimirTicket() {
+  window.print();
+}
+
+function nuevaOrden() {
+  numOrden++;
+  document.getElementById('orden-num').textContent = '#' + String(numOrden).padStart(3,'0');
+  document.getElementById('recibido-input').value = '';
+  document.getElementById('overlay-ticket').classList.remove('show');
+  limpiarOrden();
+}
+
+// ══════════════════════════════
+// HISTORIAL
+// ══════════════════════════════
+function abrirHistorial() {
+  const total = historial.reduce((s,h) => s+h.total, 0);
+  const prom = historial.length ? Math.round(total/historial.length) : 0;
+  document.getElementById('rv-ordenes').textContent = historial.length;
+  document.getElementById('rv-total').textContent = fmt(total);
+  document.getElementById('rv-prom').textContent = fmt(prom);
+
+  document.getElementById('hist-list').innerHTML = historial.length === 0
+    ? '<p style="text-align:center;color:var(--texto-suave);padding:40px">No hay ventas aún</p>'
+    : [...historial].reverse().map(h => `
+      <div class="hist-item">
+        <div class="hist-top">
+          <span class="hist-num">#${h.num}</span>
+          <span class="hist-hora">${h.hora}</span>
+        </div>
+        <div class="hist-productos">${h.items.map(i=>`${i.qty}x ${i.prod.nombre}`).join(' · ')}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="hist-total">${fmt(h.total)}</span>
+          <span class="hist-metodo">${h.metodo}</span>
+        </div>
+      </div>
+    `).join('');
+
+  document.getElementById('panel-historial').classList.add('show');
+}
+
+function cerrarHistorial() {
+  document.getElementById('panel-historial').classList.remove('show');
+}
+
+// ══════════════════════════════
+// UTILIDADES
+// ══════════════════════════════
+function fmt(n) {
+  return '$' + n.toLocaleString('es-CO');
+}
+
+function actualizarReloj() {
+  const ahora = new Date();
+  document.getElementById('reloj').textContent =
+    ahora.toLocaleTimeString('es-CO', {hour:'2-digit', minute:'2-digit'});
+  document.getElementById('fecha-hoy').textContent =
+    ahora.toLocaleDateString('es-CO', {weekday:'short', day:'numeric', month:'short'});
+}
+
+// ══════════════════════════════
+// INIT
+// ══════════════════════════════
+renderCats();
+renderGrid();
+renderOrden();
+actualizarReloj();
+setInterval(actualizarReloj, 10000);
+</script>
+
+</body>
+</html>
