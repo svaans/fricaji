@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fricaji — Carta Digital</title>
+  <style>
+    :root {
+      --rojo: #E8522A;
+      --rojo-oscuro: #c43e1c;
+      --rojo-claro: #fde8e0;
+      --blanco: #ffffff;
+      --gris: #f7f3f1;
+      --texto: #2a1a14;
+      --texto-suave: #7a5a50;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--gris);
+      color: var(--texto);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, var(--rojo) 0%, var(--rojo-oscuro) 100%);
+      color: var(--blanco);
+      text-align: center;
+      padding: 32px 20px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -30px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+
+    .logo-svg {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 12px;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── NAV CATEGORÍAS ── */
+    .nav-cats {
+      display: flex;
+      gap: 10px;
+      padding: 16px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      background: var(--blanco);
+      border-bottom: 1px solid #ecddd8;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-cats::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      flex-shrink: 0;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 2px solid var(--rojo);
+      background: transparent;
+      color: var(--rojo);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cat-btn.active,
+    .cat-btn:hover {
+      background: var(--rojo);
+      color: var(--blanco);
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 20px 14px 60px;
+    }
+
+    /* ── SECCIÓN ── */
+    .seccion {
+      margin-bottom: 36px;
+    }
+    .seccion-titulo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--rojo-oscuro);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid var(--rojo-claro);
+    }
+    .seccion-titulo .emoji {
+      font-size: 1.5rem;
+    }
+
+    /* ── CARD PRODUCTO ── */
+    .producto {
+      background: var(--blanco);
+      border-radius: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 8px rgba(232,82,42,0.08);
+      border: 1px solid rgba(232,82,42,0.1);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .producto:active {
+      transform: scale(0.98);
+    }
+
+    .prod-icon {
+      font-size: 2.2rem;
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      background: var(--rojo-claro);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .prod-info {
+      flex: 1;
+    }
+    .prod-nombre {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--texto);
+      line-height: 1.2;
+    }
+    .prod-desc {
+      font-size: 0.8rem;
+      color: var(--texto-suave);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+    .prod-tags {
+      display: flex;
+      gap: 5px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .tag-picante { background: #fff0ed; color: #c43e1c; }
+    .tag-popular { background: #fff8e1; color: #b8860b; }
+    .tag-nuevo   { background: #e8f5e9; color: #2e7d32; }
+    .tag-veggie  { background: #e8f5e9; color: #388e3c; }
+
+    .prod-precio {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--rojo);
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .prod-precio span {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--texto-suave);
+    }
+
+    /* ── SALSAS DISPONIBLES ── */
+    .salsas-box {
+      background: var(--blanco);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid rgba(232,82,42,0.15);
+      box-shadow: 0 2px 8px rgba(232,82,42,0.06);
+    }
+    .salsas-titulo {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--texto-suave);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 10px;
+    }
+    .salsas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 8px;
+    }
+    .salsa-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--rojo-claro);
+      color: var(--rojo-oscuro);
+    }
+    .salsa-nivel {
+      display: flex;
+      gap: 2px;
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--rojo);
+      opacity: 0.3;
+    }
+    .dot.on { opacity: 1; }
+
+    /* ── COMBOS BANNER ── */
+    .combo-banner {
+      background: linear-gradient(135deg, #2a1a14 0%, #4a2a1e 100%);
+      color: var(--blanco);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .combo-banner::after {
+      content: '🔥';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2.5rem;
+      opacity: 0.5;
+    }
+    .combo-banner h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .combo-banner p {
+      font-size: 0.82rem;
+      opacity: 0.8;
+      line-height: 1.4;
+    }
+    .combo-precio {
+      margin-top: 10px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffcba4;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blanco);
+      border-top: 1px solid #ecddd8;
+      text-align: center;
+      padding: 24px 20px;
+      margin-top: 20px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 400px;
+      margin: 0 auto 20px;
+    }
+    .info-card {
+      background: var(--gris);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.82rem;
+      color: var(--texto-suave);
+    }
+    .info-card strong {
+      display: block;
+      color: var(--rojo-oscuro);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+    .footer-brand {
+      font-size: 0.78rem;
+      color: #b0a09a;
+    }
+    .footer-brand b { color: var(--rojo); }
+
+    /* ── BADGE PEDIDO ── */
+    .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 0 auto;
+      width: fit-content;
+    }
+
+    /* ── NOTAS ── */
+    .nota {
+      background: #fff8e1;
+      border-left: 4px solid #ffc107;
+      border-radius: 0 10px 10px 0;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #7a6200;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <!-- Logo SVG recreado a partir de la marca -->
+  <svg class="logo-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Corazón -->
+    <path d="M50 80 C50 80 10 55 10 30 C10 18 20 10 30 10 C38 10 45 15 50 22 C55 15 62 10 70 10 C80 10 90 18 90 30 C90 55 50 80 50 80Z" fill="white" fill-opacity="0.95"/>
+    <!-- Alas izquierda -->
+    <path d="M14 38 C8 35 2 30 4 24 C6 20 12 22 14 26 C14 30 12 35 14 38Z" fill="white" fill-opacity="0.85"/>
+    <path d="M14 38 C9 42 3 40 2 34 C1 30 6 28 10 31 C12 34 13 36 14 38Z" fill="white" fill-opacity="0.7"/>
+    <!-- Alas derecha -->
+    <path d="M86 38 C92 35 98 30 96 24 C94 20 88 22 86 26 C86 30 88 35 86 38Z" fill="white" fill-opacity="0.85"/>
+    <path d="M86 38 C91 42 97 40 98 34 C99 30 94 28 90 31 C88 34 87 36 86 38Z" fill="white" fill-opacity="0.7"/>
+    <!-- Texto Fricaji -->
+    <text x="50" y="50" text-anchor="middle" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-weight="900" font-size="16" fill="#E8522A">Fricaji</text>
+    <!-- Punto exclamación decorativo -->
+    <circle cx="25" cy="22" r="3" fill="#E8522A" opacity="0.6"/>
+  </svg>
+
+  <h1>Fricaji</h1>
+  <p>🍗 Alitas · 🍔 Hamburguesas · 🫓 Arepas</p>
+</header>
+
+<!-- ══ NAV CATEGORÍAS ══ -->
+<nav class="nav-cats" id="nav">
+  <button class="cat-btn active" onclick="scrollTo('alitas', this)">🍗 Alitas</button>
+  <button class="cat-btn" onclick="scrollTo('hamburguesas', this)">🍔 Hamburguesas</button>
+  <button class="cat-btn" onclick="scrollTo('arepas', this)">🫓 Arepas</button>
+  <button class="cat-btn" onclick="scrollTo('combos', this)">🔥 Combos</button>
+  <button class="cat-btn" onclick="scrollTo('bebidas', this)">🥤 Bebidas</button>
+  <button class="cat-btn" onclick="scrollTo('salsas', this)">🧡 Salsas</button>
+</nav>
+
+<main>
+
+  <!-- ══ ALITAS ══ -->
+  <section class="seccion" id="alitas">
+    <h2 class="seccion-titulo"><span class="emoji">🍗</span> Alitas BBQ</h2>
+
+    <div class="nota">Todas las alitas vienen con tu salsa favorita. ¡Elige la que más te guste!</div>
+
+    <div class="producto">
+      <div class="prod-icon">🍗</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Alitas x 6</div>
+        <div class="prod-desc">6 alitas marinadas con salsa a elección</div>
+        <div class="prod-tags">
+          <span class="tag tag-popular">⭐ Más pedido</span>
+        </div>
+      </div>
+      <div class="prod-precio">$18.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🍗</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Alitas x 10</div>
+        <div class="prod-desc">10 alitas marinadas con salsa a elección</div>
+        <div class="prod-tags">
+          <span class="tag tag-popular">⭐ Más pedido</span>
+        </div>
+      </div>
+      <div class="prod-precio">$28.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🍗</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Alitas x 15</div>
+        <div class="prod-desc">15 alitas — ideal para compartir</div>
+        <div class="prod-tags">
+          <span class="tag tag-popular">🔥 Para la mesa</span>
+        </div>
+      </div>
+      <div class="prod-precio">$40.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🌶️</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Alitas x 6 — Doble Salsa</div>
+        <div class="prod-desc">Pide 2 salsas distintas para tus 6 alitas</div>
+        <div class="prod-tags">
+          <span class="tag tag-picante">🌶 Picante disponible</span>
+        </div>
+      </div>
+      <div class="prod-precio">$21.000<span>COP</span></div>
+    </div>
+  </section>
+
+  <!-- ══ HAMBURGUESAS ══ -->
+  <section class="seccion" id="hamburguesas">
+    <h2 class="seccion-titulo"><span class="emoji">🍔</span> Hamburguesas</h2>
+
+    <div class="producto">
+      <div class="prod-icon">🍔</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Hamburguesa Clásica</div>
+        <div class="prod-desc">Pechuga empanada, lechuga, tomate, doble mozzarella</div>
+        <div class="prod-tags">
+          <span class="tag tag-popular">⭐ Clásico</span>
+        </div>
+      </div>
+      <div class="prod-precio">$16.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🍔</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Hamburguesa Fricaji</div>
+        <div class="prod-desc">Pechuga empanada, doble mozz, cheddar, cebolla crujiente, salsa cebolla dulce, aros de cebolla + alita</div>
+        <div class="prod-tags">
+          <span class="tag tag-popular">🏆 Especial de la casa</span>
+        </div>
+      </div>
+      <div class="prod-precio">$22.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🍔</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Hamburguesa BBQ</div>
+        <div class="prod-desc">Pechuga empanada, tocineta, cheddar, salsa BBQ, cebolla caramelizada</div>
+        <div class="prod-tags">
+          <span class="tag tag-picante">🔥 Intensa</span>
+        </div>
+      </div>
+      <div class="prod-precio">$20.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🍔</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Sándwich de Pollo</div>
+        <div class="prod-desc">Filete de pechuga 120g, lechuga, tomate, doble mozzarella + alita</div>
+      </div>
+      <div class="prod-precio">$18.000<span>COP</span></div>
+    </div>
+  </section>
+
+  <!-- ══ AREPAS ══ -->
+  <section class="seccion" id="arepas">
+    <h2 class="seccion-titulo"><span class="emoji">🫓</span> Arepas</h2>
+
+    <div class="producto">
+      <div class="prod-icon">🫓</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Arepa con Pollo</div>
+        <div class="prod-desc">Arepa de maíz, pollo desmechado, queso y salsas</div>
+        <div class="prod-tags">
+          <span class="tag tag-popular">⭐ Favorita</span>
+        </div>
+      </div>
+      <div class="prod-precio">$12.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🫓</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Arepa Fricaji</div>
+        <div class="prod-desc">Arepa, pollo, alita encima, doble queso, salsa BBQ</div>
+        <div class="prod-tags">
+          <span class="tag tag-popular">🏆 Especial</span>
+        </div>
+      </div>
+      <div class="prod-precio">$16.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🫓</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Arepa con Carne</div>
+        <div class="prod-desc">Arepa de maíz, carne molida sazonada, queso y salsas</div>
+      </div>
+      <div class="prod-precio">$13.000<span>COP</span></div>
+    </div>
+  </section>
+
+  <!-- ══ COMBOS ══ -->
+  <section class="seccion" id="combos">
+    <h2 class="seccion-titulo"><span class="emoji">🔥</span> Combos</h2>
+
+    <div class="combo-banner">
+      <h3>Combo Alitas + Bebida</h3>
+      <p>6 alitas con salsa a elección + gaseosa personal</p>
+      <div class="combo-precio">$22.000</div>
+    </div>
+
+    <div class="combo-banner">
+      <h3>Combo Hamburguesa + Papas + Bebida</h3>
+      <p>Hamburguesa clásica + papas fritas + gaseosa personal</p>
+      <div class="combo-precio">$25.000</div>
+    </div>
+
+    <div class="combo-banner">
+      <h3>Combo Para 2 🔥</h3>
+      <p>10 alitas + 2 hamburguesas + 2 bebidas</p>
+      <div class="combo-precio">$65.000</div>
+    </div>
+
+    <div class="combo-banner">
+      <h3>Combo Familiar ❤️</h3>
+      <p>15 alitas + 3 hamburguesas Fricaji + 4 bebidas</p>
+      <div class="combo-precio">$95.000</div>
+    </div>
+  </section>
+
+  <!-- ══ BEBIDAS ══ -->
+  <section class="seccion" id="bebidas">
+    <h2 class="seccion-titulo"><span class="emoji">🥤</span> Bebidas</h2>
+
+    <div class="producto">
+      <div class="prod-icon">🥤</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Gaseosa Personal</div>
+        <div class="prod-desc">Coca-Cola, Sprite, Manzana — 250ml</div>
+      </div>
+      <div class="prod-precio">$3.500<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🥤</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Gaseosa Grande</div>
+        <div class="prod-desc">500ml — para compartir</div>
+      </div>
+      <div class="prod-precio">$6.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">💧</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Agua Botella</div>
+        <div class="prod-desc">600ml sin gas</div>
+      </div>
+      <div class="prod-precio">$3.000<span>COP</span></div>
+    </div>
+
+    <div class="producto">
+      <div class="prod-icon">🧃</div>
+      <div class="prod-info">
+        <div class="prod-nombre">Jugos Hit / Del Valle</div>
+        <div class="prod-desc">Mango, maracuyá, naranja, mora</div>
+      </div>
+      <div class="prod-precio">$4.000<span>COP</span></div>
+    </div>
+  </section>
+
+  <!-- ══ SALSAS ══ -->
+  <section class="seccion" id="salsas">
+    <h2 class="seccion-titulo"><span class="emoji">🧡</span> Nuestras Salsas</h2>
+
+    <div class="salsas-box">
+      <div class="salsas-titulo">Elige tu salsa favorita para las alitas</div>
+      <div class="salsas-grid">
+
+        <div class="salsa-pill">
+          🍯 BBQ Clásica
+          <div class="salsa-nivel">
+            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+        </div>
+
+        <div class="salsa-pill">
+          🍋 Limón Pimienta
+          <div class="salsa-nivel">
+            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+        </div>
+
+        <div class="salsa-pill">
+          🧄 Ajo Parmesano
+          <div class="salsa-nivel">
+            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+        </div>
+
+        <div class="salsa-pill">
+          🌶️ BBQ Picante
+          <div class="salsa-nivel">
+            <div class="dot on"></div><div class="dot on"></div><div class="dot"></div>
+          </div>
+        </div>
+
+        <div class="salsa-pill">
+          🔥 Buffalo
+          <div class="salsa-nivel">
+            <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div>
+          </div>
+        </div>
+
+        <div class="salsa-pill">
+          🍯 Miel Mostaza
+          <div class="salsa-nivel">
+            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+        </div>
+
+        <div class="salsa-pill">
+          🌿 Teriyaki
+          <div class="salsa-nivel">
+            <div class="dot on"></div><div class="dot on"></div><div class="dot"></div>
+          </div>
+        </div>
+
+        <div class="salsa-pill">
+          🫙 Cebolla Dulce
+          <div class="salsa-nivel">
+            <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+        </div>
+
+      </div>
+      <p style="font-size:0.75rem;color:var(--texto-suave);margin-top:12px;text-align:center;">
+        🌶️ = nivel de picante | Pide sin picante si lo prefieres suave
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="info-card">
+      <strong>📍 Sedes</strong>
+      Mirador de Villavento<br>Montebonito
+    </div>
+    <div class="info-card">
+      <strong>⏰ Horario</strong>
+      Lun y Mié–Dom<br>4:30 PM – 11:00 PM<br><em style="color:#c43e1c">Martes: Cerrado</em>
+    </div>
+    <div class="info-card">
+      <strong>📞 Pedidos</strong>
+      310 459 6548<br>305 351 5985
+    </div>
+    <div class="info-card">
+      <strong>📲 Redes</strong>
+      @fricaji<br>en Instagram
+    </div>
+  </div>
+
+  <a class="whatsapp-btn" href="https://wa.me/573104596548?text=Hola%20Fricaji!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8D%97" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    Pedir por WhatsApp
+  </a>
+
+  <p class="footer-brand" style="margin-top:16px;">
+    ❤️ Hecho con amor — <b>Fricaji</b> · Dosquebradas, Risaralda
+  </p>
+</footer>
+
+<script>
+  function scrollTo(id, btn) {
+    // Actualizar botón activo
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Scroll a la sección
+    const el = document.getElementById(id);
+    if (el) {
+      const navH = document.getElementById('nav').offsetHeight;
+      const top = el.getBoundingClientRect().top + window.scrollY - navH - 12;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }
+
+  // Resaltar categoría al hacer scroll
+  const secciones = ['alitas','hamburguesas','arepas','combos','bebidas','salsas'];
+  const btns = document.querySelectorAll('.cat-btn');
+  const nav = document.getElementById('nav');
+
+  window.addEventListener('scroll', () => {
+    const navH = nav.offsetHeight;
+    let actual = 0;
+    secciones.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= navH + 20) actual = i;
+    });
+    btns.forEach((b, i) => b.classList.toggle('active', i === actual));
+  });
+</script>
+
+</body>
+</html>
