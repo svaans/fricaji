@@ -221,7 +221,7 @@
 ══════════════════════════════ -->
 <div id="pantalla-login">
   <div class="login-card">
-    <div class="login-logo">❤️</div>
+    <div class="login-logo"></div>
     <h1>Fricaji</h1>
     <p>Acceso exclusivo del negocio</p>
 
@@ -244,7 +244,7 @@
       <button class="key" onclick="tecla('9')">9</button>
       <button class="key borrar" onclick="borrar()">⌫</button>
       <button class="key" onclick="tecla('0')">0</button>
-      <button class="key entrar" onclick="entrar()">Entrar ▶</button>
+      <button class="key entrar" onclick="entrar()">Entrar </button>
     </div>
 
     <div class="login-error" id="login-error"></div>
@@ -259,21 +259,21 @@
 
   <!-- Top bar -->
   <div class="topbar">
-    <div class="topbar-brand">❤️ Fricaji <span class="topbar-badge" id="reloj">--:--</span></div>
+    <div class="topbar-brand"> Fricaji <span class="topbar-badge" id="reloj">--:--</span></div>
     <div class="topbar-mid" id="fecha-hoy"></div>
-    <button class="btn-top" onclick="cerrarSesion()">🔒 Salir</button>
+    <button class="btn-top" onclick="cerrarSesion()"> Salir</button>
   </div>
 
   <!-- Tabs -->
   <div class="tabs">
     <div class="tab activo" onclick="irTab('pos',this)">
-      <span class="tab-icon">🧾</span>POS
+      <span class="tab-icon"></span>POS
     </div>
     <div class="tab" onclick="irTab('inventario',this)">
-      <span class="tab-icon">📦</span>Inventario
+      <span class="tab-icon"></span>Inventario
     </div>
     <div class="tab" onclick="irTab('ventas',this)">
-      <span class="tab-icon">📊</span>Ventas
+      <span class="tab-icon"></span>Ventas
     </div>
   </div>
 
@@ -292,12 +292,12 @@
             <div class="orden-tit">Orden <span id="num-orden" style="color:var(--rojo)">#001</span></div>
             <div class="orden-sub" id="cnt-items">0 productos</div>
           </div>
-          <button class="btn-vac" onclick="vaciarOrden()">🗑 Vaciar</button>
+          <button class="btn-vac" onclick="vaciarOrden()"> Vaciar</button>
         </div>
 
         <div class="orden-items" id="lista-orden">
           <div class="orden-empty" id="empty-or">
-            <span class="eico">🛒</span><span>Toca un producto</span>
+            <span class="eico"></span><span>Toca un producto</span>
           </div>
         </div>
 
@@ -305,9 +305,9 @@
           <div class="rl"><span>Subtotal</span><span id="sub-val">$0</span></div>
           <div class="rtot"><span>TOTAL</span><span class="monto" id="tot-val">$0</span></div>
           <div class="metodos">
-            <div class="met-btn sel" data-m="efectivo" onclick="selMet(this)"><span class="met-ico">💵</span>Efectivo</div>
-            <div class="met-btn" data-m="nequi"    onclick="selMet(this)"><span class="met-ico">📱</span>Nequi</div>
-            <div class="met-btn" data-m="tarjeta"  onclick="selMet(this)"><span class="met-ico">💳</span>Tarjeta</div>
+            <div class="met-btn sel" data-m="efectivo" onclick="selMet(this)"><span class="met-ico"></span>Efectivo</div>
+            <div class="met-btn" data-m="nequi"    onclick="selMet(this)"><span class="met-ico"></span>Nequi</div>
+            <div class="met-btn" data-m="tarjeta"  onclick="selMet(this)"><span class="met-ico"></span>Tarjeta</div>
           </div>
           <div class="efect-box show" id="efect-box">
             <label>Recibido $</label>
@@ -324,8 +324,8 @@
   <div class="tab-content" id="tab-inventario">
     <div class="inv-layout">
       <div class="inv-toolbar">
-        <h2>📦 Inventario</h2>
-        <button class="btn-inv btn-costos" onclick="abrirCostos()">💰 Costos por plato</button>
+        <h2> Inventario</h2>
+        <button class="btn-inv btn-costos" onclick="abrirCostos()"> Costos por plato</button>
         <button class="btn-inv btn-add-ing" onclick="abrirModalIng(null)">+ Ingrediente</button>
       </div>
       <div class="inv-lista" id="inv-lista"></div>
@@ -349,14 +349,14 @@
 <!-- ══ MODAL TICKET ══ -->
 <div class="overlay" id="overlay-tick">
   <div class="modal">
-    <div class="tick-hdr"><h2>❤️ Fricaji</h2><p id="tick-fecha"></p><p style="font-size:0.75rem" id="tick-num"></p></div>
+    <div class="tick-hdr"><h2> Fricaji</h2><p id="tick-fecha"></p><p style="font-size:0.75rem" id="tick-num"></p></div>
     <div id="tick-items"></div>
     <div class="tick-tot"><span>TOTAL</span><span id="tick-tot"></span></div>
     <div class="tick-cambio" id="tick-cambio" style="display:none"></div>
-    <div class="tick-grac">¡Gracias por tu compra! 🍗❤️<br>@fricaji</div>
+    <div class="tick-grac">¡Gracias por tu compra! <br>@fricaji</div>
     <div class="modal-btns">
-      <button class="btn-m btn-cancel" onclick="window.print()">🖨️ Imprimir</button>
-      <button class="btn-m btn-ok" onclick="nuevaOrden()">✅ Nueva orden</button>
+      <button class="btn-m btn-cancel" onclick="window.print()"> Imprimir</button>
+      <button class="btn-m btn-ok" onclick="nuevaOrden()"> Nueva orden</button>
     </div>
   </div>
 </div>
@@ -367,7 +367,7 @@
     <h3 id="ing-modal-titulo">Nuevo ingrediente</h3>
     <input type="hidden" id="ing-edit-id"/>
     <div class="campo"><label>Nombre</label><input type="text" id="ing-nom" placeholder="Ej: Alitas de pollo"/></div>
-    <div class="campo"><label>Icono (emoji)</label><input type="text" id="ing-ico" placeholder="🍗" maxlength="4"/></div>
+    <div class="campo"><label>Icono (emoji)</label><input type="text" id="ing-ico" placeholder="" maxlength="4"/></div>
     <div class="campo"><label>Unidad</label>
       <select id="ing-unidad">
         <option>kg</option><option>g</option><option>unidades</option>
@@ -404,7 +404,7 @@
 <!-- ══ MODAL COSTOS ══ -->
 <div class="overlay" id="overlay-costos">
   <div class="modal" style="max-width:420px">
-    <h3>💰 Costo estimado por plato</h3>
+    <h3> Costo estimado por plato</h3>
     <p style="font-size:0.78rem;color:var(--suave);margin-bottom:12px">Basado en el costo de ingredientes ingresado</p>
     <div id="costos-lista"></div>
     <div class="modal-btns">
@@ -420,41 +420,41 @@
 const PIN_DEFAULT = '1234';
 
 const MENU = [
-  {id:1,cat:'Alitas',  icon:'🍗',nombre:'Alitas x 6',        precio:18000},
-  {id:2,cat:'Alitas',  icon:'🍗',nombre:'Alitas x 10',       precio:28000},
-  {id:3,cat:'Alitas',  icon:'🍗',nombre:'Alitas x 15',       precio:40000},
-  {id:4,cat:'Alitas',  icon:'🌶️',nombre:'Alitas Doble Salsa',precio:21000},
-  {id:5,cat:'Hamburguesas',icon:'🍔',nombre:'H. Clásica',    precio:16000},
-  {id:6,cat:'Hamburguesas',icon:'🍔',nombre:'H. Fricaji',    precio:22000},
-  {id:7,cat:'Hamburguesas',icon:'🍔',nombre:'H. BBQ',        precio:20000},
-  {id:8,cat:'Hamburguesas',icon:'🍔',nombre:'Sándwich Pollo',precio:18000},
-  {id:9, cat:'Arepas',icon:'🫓',nombre:'Arepa Pollo',        precio:12000},
-  {id:10,cat:'Arepas',icon:'🫓',nombre:'Arepa Fricaji',      precio:16000},
-  {id:11,cat:'Arepas',icon:'🫓',nombre:'Arepa Carne',        precio:13000},
-  {id:12,cat:'Combos',icon:'🔥',nombre:'Combo Alitas+Beb',   precio:22000},
-  {id:13,cat:'Combos',icon:'🔥',nombre:'Combo H+Papas+Beb',  precio:25000},
-  {id:14,cat:'Combos',icon:'🔥',nombre:'Combo Para 2',       precio:65000},
-  {id:15,cat:'Combos',icon:'🔥',nombre:'Combo Familiar',     precio:95000},
-  {id:16,cat:'Bebidas',icon:'🥤',nombre:'Gaseosa Personal',  precio:3500},
-  {id:17,cat:'Bebidas',icon:'🥤',nombre:'Gaseosa Grande',    precio:6000},
-  {id:18,cat:'Bebidas',icon:'💧',nombre:'Agua',              precio:3000},
-  {id:19,cat:'Bebidas',icon:'🧃',nombre:'Jugo Hit',          precio:4000},
+  {id:1,cat:'Alitas',  icon:'',nombre:'Alitas x 6',        precio:18000},
+  {id:2,cat:'Alitas',  icon:'',nombre:'Alitas x 10',       precio:28000},
+  {id:3,cat:'Alitas',  icon:'',nombre:'Alitas x 15',       precio:40000},
+  {id:4,cat:'Alitas',  icon:'',nombre:'Alitas Doble Salsa',precio:21000},
+  {id:5,cat:'Hamburguesas',icon:'',nombre:'H. Clásica',    precio:16000},
+  {id:6,cat:'Hamburguesas',icon:'',nombre:'H. Fricaji',    precio:22000},
+  {id:7,cat:'Hamburguesas',icon:'',nombre:'H. BBQ',        precio:20000},
+  {id:8,cat:'Hamburguesas',icon:'',nombre:'Sándwich Pollo',precio:18000},
+  {id:9, cat:'Arepas',icon:'',nombre:'Arepa Pollo',        precio:12000},
+  {id:10,cat:'Arepas',icon:'',nombre:'Arepa Fricaji',      precio:16000},
+  {id:11,cat:'Arepas',icon:'',nombre:'Arepa Carne',        precio:13000},
+  {id:12,cat:'Combos',icon:'',nombre:'Combo Alitas+Beb',   precio:22000},
+  {id:13,cat:'Combos',icon:'',nombre:'Combo H+Papas+Beb',  precio:25000},
+  {id:14,cat:'Combos',icon:'',nombre:'Combo Para 2',       precio:65000},
+  {id:15,cat:'Combos',icon:'',nombre:'Combo Familiar',     precio:95000},
+  {id:16,cat:'Bebidas',icon:'',nombre:'Gaseosa Personal',  precio:3500},
+  {id:17,cat:'Bebidas',icon:'',nombre:'Gaseosa Grande',    precio:6000},
+  {id:18,cat:'Bebidas',icon:'',nombre:'Agua',              precio:3000},
+  {id:19,cat:'Bebidas',icon:'',nombre:'Jugo Hit',          precio:4000},
 ];
 
 const CATS = [...new Set(MENU.map(p=>p.cat))];
 
 // Ingredientes iniciales predefinidos
 const INGS_DEFAULT = [
-  {id:1, nom:'Alitas de pollo',    ico:'🍗', unidad:'kg',       stock:5,   min:2,   costo:12000},
-  {id:2, nom:'Pechuga de pollo',   ico:'🐔', unidad:'kg',       stock:3,   min:1,   costo:10000},
-  {id:3, nom:'Pan de hamburguesa', ico:'🍞', unidad:'unidades', stock:30,  min:10,  costo:800},
-  {id:4, nom:'Queso Mozzarella',   ico:'🧀', unidad:'kg',       stock:1.5, min:0.5, costo:18000},
-  {id:5, nom:'Salsa BBQ',          ico:'🍯', unidad:'litros',   stock:2,   min:0.5, costo:8000},
-  {id:6, nom:'Maíz p/arepas',      ico:'🌽', unidad:'kg',       stock:4,   min:1,   costo:3500},
-  {id:7, nom:'Aceite freidora',    ico:'🫙', unidad:'litros',   stock:5,   min:1,   costo:5000},
-  {id:8, nom:'Gaseosas',           ico:'🥤', unidad:'unidades', stock:48,  min:12,  costo:1800},
-  {id:9, nom:'Papa criolla',       ico:'🥔', unidad:'kg',       stock:3,   min:1,   costo:2500},
-  {id:10,nom:'Cajas/Empaques',     ico:'📦', unidad:'unidades', stock:60,  min:20,  costo:300},
+  {id:1, nom:'Alitas de pollo',    ico:'', unidad:'kg',       stock:5,   min:2,   costo:12000},
+  {id:2, nom:'Pechuga de pollo',   ico:'', unidad:'kg',       stock:3,   min:1,   costo:10000},
+  {id:3, nom:'Pan de hamburguesa', ico:'', unidad:'unidades', stock:30,  min:10,  costo:800},
+  {id:4, nom:'Queso Mozzarella',   ico:'', unidad:'kg',       stock:1.5, min:0.5, costo:18000},
+  {id:5, nom:'Salsa BBQ',          ico:'', unidad:'litros',   stock:2,   min:0.5, costo:8000},
+  {id:6, nom:'Maíz p/arepas',      ico:'', unidad:'kg',       stock:4,   min:1,   costo:3500},
+  {id:7, nom:'Aceite freidora',    ico:'', unidad:'litros',   stock:5,   min:1,   costo:5000},
+  {id:8, nom:'Gaseosas',           ico:'', unidad:'unidades', stock:48,  min:12,  costo:1800},
+  {id:9, nom:'Papa criolla',       ico:'', unidad:'kg',       stock:3,   min:1,   costo:2500},
+  {id:10,nom:'Cajas/Empaques',     ico:'', unidad:'unidades', stock:60,  min:20,  costo:300},
 ];
 
 // ════════════════════════════════════════
@@ -499,7 +499,7 @@ function entrar() {
     document.getElementById('app').classList.remove('oculto');
     iniciarApp();
   } else {
-    document.getElementById('login-error').textContent = '❌ PIN incorrecto';
+    document.getElementById('login-error').textContent = ' PIN incorrecto';
     pinEntrado = '';
     actualizarDots();
   }
@@ -544,7 +544,7 @@ function renderCats() {
     <div class="cat-tab ${c===catActiva?'activo':''}" onclick="cambiarCat('${c}')">${iconCat(c)} ${c}</div>
   `).join('');
 }
-const iconCat=c=>({Alitas:'🍗',Hamburguesas:'🍔',Arepas:'🫓',Combos:'🔥',Bebidas:'🥤'}[c]||'');
+const iconCat=c=>({Alitas:'',Hamburguesas:'',Arepas:'',Combos:'',Bebidas:''}[c]||'');
 function cambiarCat(c){catActiva=c;renderCats();renderGrid();}
 function renderGrid(){
   document.getElementById('grid-pos').innerHTML = MENU.filter(p=>p.cat===catActiva).map(p=>`
@@ -577,7 +577,7 @@ function vaciarOrden(){orden=[];renderOrden();}
 function renderOrden(){
   const cont=document.getElementById('lista-orden');
   if(orden.length===0){
-    cont.innerHTML='<div class="orden-empty"><span class="eico">🛒</span><span>Toca un producto</span></div>';
+    cont.innerHTML='<div class="orden-empty"><span class="eico"></span><span>Toca un producto</span></div>';
   } else {
     cont.innerHTML=orden.map(i=>`
       <div class="item-or">
@@ -650,7 +650,7 @@ function cobrar(){
   `).join('');
   document.getElementById('tick-tot').textContent=fmt(tot);
   const tc=document.getElementById('tick-cambio');
-  if(metodo==='efectivo'&&cambio>0){tc.style.display='block';tc.textContent=`💵 Cambio: ${fmt(cambio)}`;}
+  if(metodo==='efectivo'&&cambio>0){tc.style.display='block';tc.textContent=` Cambio: ${fmt(cambio)}`;}
   else tc.style.display='none';
   document.getElementById('overlay-tick').classList.add('show');
 }
@@ -679,13 +679,13 @@ function renderInv(){
   const alertas=ings.filter(i=>nivelStock(i)!=='ok');
   let html='';
   if(alertas.length){
-    html+=`<div class="inv-alerta">⚠️ ${alertas.length} ingrediente${alertas.length>1?'s':''} con stock bajo o agotado: ${alertas.map(i=>i.nom).join(', ')}</div>`;
+    html+=`<div class="inv-alerta"> ${alertas.length} ingrediente${alertas.length>1?'s':''} con stock bajo o agotado: ${alertas.map(i=>i.nom).join(', ')}</div>`;
   }
   html+=ings.map(i=>{
     const niv=nivelStock(i);
     const pct=pctStock(i);
     const badgeCls={'ok':'badge-ok','bajo':'badge-bajo','agotado':'badge-agotado'}[niv];
-    const badgeTxt={'ok':'✅ OK','bajo':'⚠️ Bajo','agotado':'🔴 Agotado'}[niv];
+    const badgeTxt={'ok':' OK','bajo':' Bajo','agotado':' Agotado'}[niv];
     const barCls={'ok':'bar-ok','bajo':'bar-bajo','agotado':'bar-agotado'}[niv];
     return `
       <div class="ing-card">
@@ -705,7 +705,7 @@ function renderInv(){
           </div>
           <button class="btn-ing-sm btn-ingresar" onclick="abrirStock(${i.id},'ingresar')">+ Ingresar</button>
           <button class="btn-ing-sm btn-usar" onclick="abrirStock(${i.id},'usar')">− Usar</button>
-          <button class="btn-ing-sm btn-ing-edit" onclick="abrirModalIng(${i.id})">✏️</button>
+          <button class="btn-ing-sm btn-ing-edit" onclick="abrirModalIng(${i.id})"></button>
         </div>
       </div>
     `;
@@ -736,7 +736,7 @@ function guardarIng(){
   const id=document.getElementById('ing-edit-id').value;
   const obj={
     nom: document.getElementById('ing-nom').value.trim(),
-    ico: document.getElementById('ing-ico').value.trim()||'📦',
+    ico: document.getElementById('ing-ico').value.trim()||'',
     unidad: document.getElementById('ing-unidad').value,
     stock: parseFloat(document.getElementById('ing-stock').value)||0,
     min:   parseFloat(document.getElementById('ing-min').value)||0,
@@ -758,7 +758,7 @@ function abrirStock(id,tipo){
   document.getElementById('stock-ing-id').value=id;
   document.getElementById('stock-tipo').value=tipo;
   const i=ings.find(x=>x.id===id);
-  document.getElementById('stock-titulo').textContent=tipo==='ingresar'?`➕ Ingresar: ${i.nom}`:`➖ Usar: ${i.nom}`;
+  document.getElementById('stock-titulo').textContent=tipo==='ingresar'?` Ingresar: ${i.nom}`:` Usar: ${i.nom}`;
   document.getElementById('stock-label').textContent=tipo==='ingresar'?'Cantidad a agregar':'Cantidad a descontar';
   document.getElementById('stock-cant').value='';
   document.getElementById('stock-nota').value='';
@@ -780,12 +780,12 @@ function moverStock(){
 
 // Costos por plato (estimados)
 const COSTOS_PLATO = [
-  {nombre:'Alitas x 6',    icon:'🍗', costo_est: ()=> costoIng('Alitas de pollo',0.3)+costoIng('Salsa BBQ',0.05)+costoIng('Cajas/Empaques',1)},
-  {nombre:'Alitas x 10',   icon:'🍗', costo_est: ()=> costoIng('Alitas de pollo',0.5)+costoIng('Salsa BBQ',0.08)+costoIng('Cajas/Empaques',1)},
-  {nombre:'H. Fricaji',    icon:'🍔', costo_est: ()=> costoIng('Pechuga de pollo',0.15)+costoIng('Pan de hamburguesa',1)+costoIng('Queso Mozzarella',0.05)+costoIng('Cajas/Empaques',1)},
-  {nombre:'H. Clásica',    icon:'🍔', costo_est: ()=> costoIng('Pechuga de pollo',0.12)+costoIng('Pan de hamburguesa',1)+costoIng('Queso Mozzarella',0.04)+costoIng('Cajas/Empaques',1)},
-  {nombre:'Arepa Pollo',   icon:'🫓', costo_est: ()=> costoIng('Maíz p/arepas',0.08)+costoIng('Pechuga de pollo',0.08)+costoIng('Queso Mozzarella',0.03)+costoIng('Cajas/Empaques',1)},
-  {nombre:'Arepa Fricaji', icon:'🫓', costo_est: ()=> costoIng('Maíz p/arepas',0.08)+costoIng('Alitas de pollo',0.1)+costoIng('Queso Mozzarella',0.04)+costoIng('Cajas/Empaques',1)},
+  {nombre:'Alitas x 6',    icon:'', costo_est: ()=> costoIng('Alitas de pollo',0.3)+costoIng('Salsa BBQ',0.05)+costoIng('Cajas/Empaques',1)},
+  {nombre:'Alitas x 10',   icon:'', costo_est: ()=> costoIng('Alitas de pollo',0.5)+costoIng('Salsa BBQ',0.08)+costoIng('Cajas/Empaques',1)},
+  {nombre:'H. Fricaji',    icon:'', costo_est: ()=> costoIng('Pechuga de pollo',0.15)+costoIng('Pan de hamburguesa',1)+costoIng('Queso Mozzarella',0.05)+costoIng('Cajas/Empaques',1)},
+  {nombre:'H. Clásica',    icon:'', costo_est: ()=> costoIng('Pechuga de pollo',0.12)+costoIng('Pan de hamburguesa',1)+costoIng('Queso Mozzarella',0.04)+costoIng('Cajas/Empaques',1)},
+  {nombre:'Arepa Pollo',   icon:'', costo_est: ()=> costoIng('Maíz p/arepas',0.08)+costoIng('Pechuga de pollo',0.08)+costoIng('Queso Mozzarella',0.03)+costoIng('Cajas/Empaques',1)},
+  {nombre:'Arepa Fricaji', icon:'', costo_est: ()=> costoIng('Maíz p/arepas',0.08)+costoIng('Alitas de pollo',0.1)+costoIng('Queso Mozzarella',0.04)+costoIng('Cajas/Empaques',1)},
 ];
 
 function costoIng(nom, cant){
@@ -831,7 +831,7 @@ function renderVentas(){
   document.getElementById('vr-prom').textContent=fmt(prom);
 
   if(!ventas.length){
-    document.getElementById('ventas-lista').innerHTML='<div class="ventas-empty">🧾 No hay ventas aún.<br>Las órdenes cobradas aparecerán aquí.</div>';
+    document.getElementById('ventas-lista').innerHTML='<div class="ventas-empty"> No hay ventas aún.<br>Las órdenes cobradas aparecerán aquí.</div>';
     return;
   }
   document.getElementById('ventas-lista').innerHTML=[...ventas].reverse().map(v=>`

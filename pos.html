@@ -424,13 +424,13 @@
 
 <!-- ══ TOP BAR ══ -->
 <div class="topbar">
-  <div class="topbar-brand">❤️ Fricaji <span class="turno-badge" id="turno-label">POS</span></div>
+  <div class="topbar-brand">Fricaji <span class="turno-badge" id="turno-label">POS</span></div>
   <div style="flex:1"></div>
   <div class="topbar-info">
     <span id="reloj">--:--</span>
     <span id="fecha-hoy" style="font-size:0.7rem;opacity:0.8"></span>
   </div>
-  <button class="btn-hist" onclick="abrirHistorial()">📋 Ventas</button>
+  <button class="btn-hist" onclick="abrirHistorial()">Ventas</button>
 </div>
 
 <!-- ══ LAYOUT ══ -->
@@ -452,12 +452,12 @@
         <div class="orden-titulo">Orden <span id="orden-num" style="color:var(--rojo)">#001</span></div>
         <div class="orden-num" id="items-count">0 productos</div>
       </div>
-      <button class="btn-limpiar" onclick="limpiarOrden()">🗑 Vaciar</button>
+      <button class="btn-limpiar" onclick="limpiarOrden()"> Vaciar</button>
     </div>
 
     <div class="orden-items" id="orden-items">
       <div class="orden-empty" id="empty-msg">
-        <span class="icono">🛒</span>
+        <span class="icono"></span>
         <span>Toca un producto para agregarlo</span>
       </div>
     </div>
@@ -471,13 +471,13 @@
       <!-- Método de pago -->
       <div class="metodos">
         <div class="metodo-btn selected" data-m="efectivo" onclick="selMetodo(this)">
-          <span class="metodo-icon">💵</span>Efectivo
+          <span class="metodo-icon"></span>Efectivo
         </div>
         <div class="metodo-btn" data-m="nequi" onclick="selMetodo(this)">
-          <span class="metodo-icon">📱</span>Nequi
+          <span class="metodo-icon"></span>Nequi
         </div>
         <div class="metodo-btn" data-m="tarjeta" onclick="selMetodo(this)">
-          <span class="metodo-icon">💳</span>Tarjeta
+          <span class="metodo-icon"></span>Tarjeta
         </div>
       </div>
 
@@ -499,7 +499,7 @@
 <div class="overlay" id="overlay-ticket">
   <div class="modal" id="modal-ticket">
     <div class="ticket-header">
-      <h2>❤️ Fricaji</h2>
+      <h2> Fricaji</h2>
       <p id="tick-fecha"></p>
       <p style="font-size:0.78rem;margin-top:2px" id="tick-num"></p>
     </div>
@@ -508,10 +508,10 @@
       <span>TOTAL</span><span id="tick-total"></span>
     </div>
     <div class="ticket-cambio" id="tick-cambio" style="display:none"></div>
-    <div class="ticket-gracias">¡Gracias por tu compra! 🍗❤️<br>@fricaji</div>
+    <div class="ticket-gracias">¡Gracias por tu compra! <br>@fricaji</div>
     <div class="modal-btns">
-      <button class="btn-modal btn-imprimir" onclick="imprimirTicket()">🖨️ Imprimir</button>
-      <button class="btn-modal btn-nuevo" onclick="nuevaOrden()">✅ Nueva orden</button>
+      <button class="btn-modal btn-imprimir" onclick="imprimirTicket()"> Imprimir</button>
+      <button class="btn-modal btn-nuevo" onclick="nuevaOrden()"> Nueva orden</button>
     </div>
   </div>
 </div>
@@ -519,8 +519,8 @@
 <!-- ══ PANEL HISTORIAL ══ -->
 <div class="panel-historial" id="panel-historial">
   <div class="hist-header">
-    <h2>📋 Ventas del turno</h2>
-    <button class="btn-cerrar-hist" onclick="cerrarHistorial()">✕ Cerrar</button>
+    <h2> Ventas del turno</h2>
+    <button class="btn-cerrar-hist" onclick="cerrarHistorial()"> Cerrar</button>
   </div>
   <div class="resumen-ventas" id="resumen-ventas">
     <div class="rv-item"><label>Órdenes</label><span id="rv-ordenes">0</span></div>
@@ -536,29 +536,29 @@
 // ══════════════════════════════
 const MENU = [
   // ALITAS
-  { id: 1, cat: 'Alitas', icon: '🍗', nombre: 'Alitas x 6',         precio: 18000 },
-  { id: 2, cat: 'Alitas', icon: '🍗', nombre: 'Alitas x 10',        precio: 28000 },
-  { id: 3, cat: 'Alitas', icon: '🍗', nombre: 'Alitas x 15',        precio: 40000 },
-  { id: 4, cat: 'Alitas', icon: '🌶️', nombre: 'Alitas Doble Salsa', precio: 21000 },
+  { id: 1, cat: 'Alitas', icon: '', nombre: 'Alitas x 6',         precio: 18000 },
+  { id: 2, cat: 'Alitas', icon: '', nombre: 'Alitas x 10',        precio: 28000 },
+  { id: 3, cat: 'Alitas', icon: '', nombre: 'Alitas x 15',        precio: 40000 },
+  { id: 4, cat: 'Alitas', icon: '', nombre: 'Alitas Doble Salsa', precio: 21000 },
   // HAMBURGUESAS
-  { id: 5, cat: 'Hamburguesas', icon: '🍔', nombre: 'H. Clásica',   precio: 16000 },
-  { id: 6, cat: 'Hamburguesas', icon: '🍔', nombre: 'H. Fricaji',   precio: 22000 },
-  { id: 7, cat: 'Hamburguesas', icon: '🍔', nombre: 'H. BBQ',       precio: 20000 },
-  { id: 8, cat: 'Hamburguesas', icon: '🍔', nombre: 'Sándwich Pollo',precio: 18000 },
+  { id: 5, cat: 'Hamburguesas', icon: '', nombre: 'H. Clásica',   precio: 16000 },
+  { id: 6, cat: 'Hamburguesas', icon: '', nombre: 'H. Fricaji',   precio: 22000 },
+  { id: 7, cat: 'Hamburguesas', icon: '', nombre: 'H. BBQ',       precio: 20000 },
+  { id: 8, cat: 'Hamburguesas', icon: '', nombre: 'Sándwich Pollo',precio: 18000 },
   // AREPAS
-  { id: 9,  cat: 'Arepas', icon: '🫓', nombre: 'Arepa con Pollo',   precio: 12000 },
-  { id: 10, cat: 'Arepas', icon: '🫓', nombre: 'Arepa Fricaji',     precio: 16000 },
-  { id: 11, cat: 'Arepas', icon: '🫓', nombre: 'Arepa con Carne',   precio: 13000 },
+  { id: 9,  cat: 'Arepas', icon: '', nombre: 'Arepa con Pollo',   precio: 12000 },
+  { id: 10, cat: 'Arepas', icon: '', nombre: 'Arepa Fricaji',     precio: 16000 },
+  { id: 11, cat: 'Arepas', icon: '', nombre: 'Arepa con Carne',   precio: 13000 },
   // COMBOS
-  { id: 12, cat: 'Combos', icon: '🔥', nombre: 'Combo Alitas+Beb',  precio: 22000 },
-  { id: 13, cat: 'Combos', icon: '🔥', nombre: 'Combo H+Papas+Beb', precio: 25000 },
-  { id: 14, cat: 'Combos', icon: '🔥', nombre: 'Combo Para 2',      precio: 65000 },
-  { id: 15, cat: 'Combos', icon: '🔥', nombre: 'Combo Familiar',    precio: 95000 },
+  { id: 12, cat: 'Combos', icon: '', nombre: 'Combo Alitas+Beb',  precio: 22000 },
+  { id: 13, cat: 'Combos', icon: '', nombre: 'Combo H+Papas+Beb', precio: 25000 },
+  { id: 14, cat: 'Combos', icon: '', nombre: 'Combo Para 2',      precio: 65000 },
+  { id: 15, cat: 'Combos', icon: '', nombre: 'Combo Familiar',    precio: 95000 },
   // BEBIDAS
-  { id: 16, cat: 'Bebidas', icon: '🥤', nombre: 'Gaseosa Personal', precio: 3500 },
-  { id: 17, cat: 'Bebidas', icon: '🥤', nombre: 'Gaseosa Grande',   precio: 6000 },
-  { id: 18, cat: 'Bebidas', icon: '💧', nombre: 'Agua',             precio: 3000 },
-  { id: 19, cat: 'Bebidas', icon: '🧃', nombre: 'Jugo Hit',         precio: 4000 },
+  { id: 16, cat: 'Bebidas', icon: '', nombre: 'Gaseosa Personal', precio: 3500 },
+  { id: 17, cat: 'Bebidas', icon: '', nombre: 'Gaseosa Grande',   precio: 6000 },
+  { id: 18, cat: 'Bebidas', icon: '', nombre: 'Agua',             precio: 3000 },
+  { id: 19, cat: 'Bebidas', icon: '', nombre: 'Jugo Hit',         precio: 4000 },
 ];
 
 const CATS = [...new Set(MENU.map(p => p.cat))];
@@ -582,7 +582,7 @@ function renderCats() {
   `).join('');
 }
 function iconCat(c) {
-  return {Alitas:'🍗',Hamburguesas:'🍔',Arepas:'🫓',Combos:'🔥',Bebidas:'🥤'}[c]||'';
+  return {Alitas:'',Hamburguesas:'',Arepas:'',Combos:'',Bebidas:''}[c]||'';
 }
 function cambiarCat(c) {
   catActiva = c;
@@ -733,7 +733,7 @@ function cobrar() {
   const tc = document.getElementById('tick-cambio');
   if (metodo === 'efectivo' && cambio > 0) {
     tc.style.display = 'block';
-    tc.textContent = `💵 Cambio: ${fmt(cambio)}`;
+    tc.textContent = ` Cambio: ${fmt(cambio)}`;
   } else {
     tc.style.display = 'none';
   }
